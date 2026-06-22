@@ -22,8 +22,8 @@ The Student Report Generator is intentionally **zero-install**. You need only th
   and vanilla JavaScript, so any current browser runs it without plugins or extensions.
 - **Internet access at page load — for PDF export only.** The PDF-export feature relies on the
   **jsPDF** library, which is loaded from a CDN (cdnjs) by a `<script>` tag in the page `<head>`
-  [Readme.md:L38]. That script must resolve when the page first loads so the `window.jspdf` global
-  is available to the **Download PDF** feature [Readme.md:L216]. Entering data and clicking
+  [Readme.md:L53]. That script must resolve when the page first loads so the `window.jspdf` global
+  is available to the **Download PDF** feature [Readme.md:L231]. Entering data and clicking
   **Generate Report** — the on-screen report card — is pure local JavaScript and works **offline**;
   only **Download PDF** needs the CDN. See [`../dependencies.md`](../dependencies.md) for the full
   CDN-availability contract.
@@ -32,7 +32,7 @@ The Student Report Generator is intentionally **zero-install**. You need only th
   is the entire setup.
 
 The single line that introduces the one external dependency, taken verbatim from the markup
-[Readme.md:L38]:
+[Readme.md:L53]:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -43,21 +43,21 @@ The single line that introduces the one external dependency, taken verbatim from
 ## Run Steps
 
 Follow these steps to produce a student report. They expand the five-step "How to Run" list from
-the embedded README [Readme.md:L262-L268]:
+the embedded README [Readme.md:L277-L283]:
 
 1. **Download or clone the project.** Get the repository onto your machine so the application files
    are available locally.
 2. **Open `index.html` in a web browser.** Double-click the file, or use your browser's
-   **File → Open** menu [Readme.md:L265].
+   **File → Open** menu [Readme.md:L280].
 3. **Enter the student details.** Fill in the student name, the roll number, and the five subject
    marks — Maths, Science, English, History, and Computer — using the form inputs. For more on
    these inputs, see [`../functionality/data-entry.md`](../functionality/data-entry.md).
 4. **Click "Generate Report".** This computes the total, percentage, and grade and renders the
-   on-screen **report card** [Readme.md:L55, L208-L212].
-5. **Click "Download PDF".** This saves the report as `<name>_Report.pdf` [Readme.md:L56, L236].
+   on-screen **report card** [Readme.md:L70, L223-L227].
+5. **Click "Download PDF".** This saves the report as `<name>_Report.pdf` [Readme.md:L71, L251].
 
 **Note on embedded source files.** The project tree advertises `index.html`, `style.css`, and
-`script.js` as standalone files [Readme.md:L14-L21], but in this repository the markup, styles, and
+`script.js` as standalone files [Readme.md:L29-L36], but in this repository the markup, styles, and
 logic currently live **embedded inside `Readme.md`** rather than as physical standalone files. This
 guide documents the **intended run flow as written** (open `index.html` in a browser) and does not
 cover extracting the embedded code into separate files, which is out of scope for this
@@ -74,16 +74,16 @@ When the app is working correctly, you will observe the following:
 
 - **After Generate Report**, the on-screen **report card** populates with the student name, the roll
   number, a marks table with one row per subject, the total marks, the percentage (shown to two
-  decimals), and a letter grade [Readme.md:L59-L78, L208-L212].
+  decimals), and a letter grade [Readme.md:L74-L93, L223-L227].
 - **After Download PDF**, the browser downloads a PDF file named `<name>_Report.pdf` — for example, a
-  student named `Asha` produces `Asha_Report.pdf` [Readme.md:L236].
+  student named `Asha` produces `Asha_Report.pdf` [Readme.md:L251].
 
 At a glance:
 
 | Action | Expected Result | Source |
 |---|---|---|
-| Click **Generate Report** | The report card renders the name, roll number, per-subject marks table, total, percentage (two decimals), and grade. | [Readme.md:L59-L78, L208-L212] |
-| Click **Download PDF** | The browser saves the report as `<name>_Report.pdf` (e.g., `Asha_Report.pdf`). | [Readme.md:L236] |
+| Click **Generate Report** | The report card renders the name, roll number, per-subject marks table, total, percentage (two decimals), and grade. | [Readme.md:L74-L93, L223-L227] |
+| Click **Download PDF** | The browser saves the report as `<name>_Report.pdf` (e.g., `Asha_Report.pdf`). | [Readme.md:L251] |
 
 ---
 

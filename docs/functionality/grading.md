@@ -4,7 +4,7 @@
 
 This guide documents feature **F-005 (Grade Assignment)** of the Computation layer: how the
 computed `percentage` is mapped to exactly one letter grade by an ordered `if / else-if`
-threshold cascade that defaults to the **default grade `'F'`** [Readme.md:L194-L206]. Like
+threshold cascade that defaults to the **default grade `'F'`** [Readme.md:L209-L221]. Like
 every page in this documentation set, it is code-grounded — every technical claim carries an
 inline `Readme.md` line-range citation back to the application source embedded in the
 repository-root `Readme.md`.
@@ -13,28 +13,28 @@ repository-root `Readme.md`.
 
 ## Source Location
 
-- **Grade cascade (default + thresholds):** [Readme.md:L194-L206]
-- **DOM write (grade rendered to the report card):** [Readme.md:L212]
-- **Upstream input (`percentage`):** [Readme.md:L192]
+- **Grade cascade (default + thresholds):** [Readme.md:L209-L221]
+- **DOM write (grade rendered to the report card):** [Readme.md:L227]
+- **Upstream input (`percentage`):** [Readme.md:L207]
 
 The grade-assignment logic lives entirely inside `generateReport()`, immediately after the
-`percentage` is computed [Readme.md:L192] and immediately before the results are written to the
-rendered DOM [Readme.md:L208-L212].
+`percentage` is computed [Readme.md:L207] and immediately before the results are written to the
+rendered DOM [Readme.md:L223-L227].
 
 ---
 
 ## How It Works
 
-Grade assignment (**F-005**) runs inside `generateReport()` immediately after `percentage` is computed [Readme.md:L192] and just before the results are written to the rendered DOM [Readme.md:L208-L212]. It works in two steps: (1) `grade` is initialized to the **default `'F'`** [Readme.md:L194]; (2) an ordered `if / else-if` cascade tests `percentage` against six descending thresholds (`>= 90 / 80 / 70 / 60 / 50`) and reassigns `grade` at the **first** matching branch [Readme.md:L196-L206]. Because it is a single `if / else-if` ladder, evaluation stops at the first satisfied condition, so every `percentage` selects exactly one grade and any value below `50` retains the default `'F'`. The resulting grade is written to the `#grade` placeholder [Readme.md:L212]. The cascade, its implicit upper bounds, the threshold rubric, and the decision flowchart are detailed below.
+Grade assignment (**F-005**) runs inside `generateReport()` immediately after `percentage` is computed [Readme.md:L207] and just before the results are written to the rendered DOM [Readme.md:L223-L227]. It works in two steps: (1) `grade` is initialized to the **default `'F'`** [Readme.md:L209]; (2) an ordered `if / else-if` cascade tests `percentage` against six descending thresholds (`>= 90 / 80 / 70 / 60 / 50`) and reassigns `grade` at the **first** matching branch [Readme.md:L211-L221]. Because it is a single `if / else-if` ladder, evaluation stops at the first satisfied condition, so every `percentage` selects exactly one grade and any value below `50` retains the default `'F'`. The resulting grade is written to the `#grade` placeholder [Readme.md:L227]. The cascade, its implicit upper bounds, the threshold rubric, and the decision flowchart are detailed below.
 
 ---
 
 ## F-005 Grade Assignment
 
 Grade assignment is **deterministic** and runs in two steps. First, `grade` is initialized to
-the **default grade `'F'`** [Readme.md:L194]. Second, an ordered `if / else-if` cascade tests
+the **default grade `'F'`** [Readme.md:L209]. Second, an ordered `if / else-if` cascade tests
 `percentage` against six descending thresholds and reassigns `grade` for the **first** matching
-branch [Readme.md:L196-L206]. Because the chain is a single `if / else-if` ladder, evaluation
+branch [Readme.md:L211-L221]. Because the chain is a single `if / else-if` ladder, evaluation
 stops at the first satisfied condition, so each `percentage` selects exactly one branch.
 
 ```javascript
@@ -54,16 +54,16 @@ if (percentage >= 90) {
 ```
 
 The resulting `grade` is then written to the rendered DOM at the `#grade` placeholder
-[Readme.md:L212].
+[Readme.md:L227].
 
 ### Implicit upper bounds
 
 Each band's **upper bound is implicit** — it is a consequence of the ordered `else if` chain,
-not an explicit comparison in the source [Readme.md:L196-L206]. A higher band is always tested
+not an explicit comparison in the source [Readme.md:L211-L221]. A higher band is always tested
 first, so a lower band can only be reached after every higher test has already failed. For
 example, the `A` branch is taken only when `percentage >= 80` **and** the preceding
 `percentage >= 90` test already failed — i.e. when `percentage` is `>= 80 and < 90`
-[Readme.md:L198-L199]. There is **no literal `< 90` comparison** anywhere in the code, so
+[Readme.md:L213-L214]. There is **no literal `< 90` comparison** anywhere in the code, so
 readers should not expect one; the same reasoning gives every band the half-open range
 `[lower threshold, next-higher threshold)`.
 
@@ -76,12 +76,12 @@ implicit (see [Implicit upper bounds](#implicit-upper-bounds) above).
 
 | Grade | Percentage Range | Source |
 |---|---|---|
-| `A+` | ≥ 90 | [Readme.md:L196-L197] |
-| `A` | ≥ 80 and < 90 | [Readme.md:L198-L199] |
-| `B` | ≥ 70 and < 80 | [Readme.md:L200-L201] |
-| `C` | ≥ 60 and < 70 | [Readme.md:L202-L203] |
-| `D` | ≥ 50 and < 60 | [Readme.md:L204-L205] |
-| `F` | < 50 (default) | [Readme.md:L194] |
+| `A+` | ≥ 90 | [Readme.md:L211-L212] |
+| `A` | ≥ 80 and < 90 | [Readme.md:L213-L214] |
+| `B` | ≥ 70 and < 80 | [Readme.md:L215-L216] |
+| `C` | ≥ 60 and < 70 | [Readme.md:L217-L218] |
+| `D` | ≥ 50 and < 60 | [Readme.md:L219-L220] |
+| `F` | < 50 (default) | [Readme.md:L209] |
 
 > **Single source of truth:** [`../reference/data-schema.md`](../reference/data-schema.md) is
 > the authoritative reference for these threshold **values**. The table above mirrors it for
@@ -99,18 +99,18 @@ the first that succeeds and otherwise retaining `'F'`.
 ```mermaid
 flowchart TD
     Start["percentage (from computation)"]
-    Init["grade = 'F' default (L194)"]
-    Q1{"percentage >= 90? (L196)"}
-    Q2{"percentage >= 80? (L198)"}
-    Q3{"percentage >= 70? (L200)"}
-    Q4{"percentage >= 60? (L202)"}
-    Q5{"percentage >= 50? (L204)"}
-    Aplus["grade = 'A+' (L197)"]
-    Ag["grade = 'A' (L199)"]
-    Bg["grade = 'B' (L201)"]
-    Cg["grade = 'C' (L203)"]
-    Dg["grade = 'D' (L205)"]
-    Fg["grade stays 'F' (L194)"]
+    Init["grade = 'F' default (L209)"]
+    Q1{"percentage >= 90? (L211)"}
+    Q2{"percentage >= 80? (L213)"}
+    Q3{"percentage >= 70? (L215)"}
+    Q4{"percentage >= 60? (L217)"}
+    Q5{"percentage >= 50? (L219)"}
+    Aplus["grade = 'A+' (L212)"]
+    Ag["grade = 'A' (L214)"]
+    Bg["grade = 'B' (L216)"]
+    Cg["grade = 'C' (L218)"]
+    Dg["grade = 'D' (L220)"]
+    Fg["grade stays 'F' (L209)"]
     Start --> Init --> Q1
     Q1 -->|"Yes"| Aplus
     Q1 -->|"No"| Q2
@@ -124,7 +124,7 @@ flowchart TD
     Q5 -->|"No"| Fg
 ```
 
-*Flowchart validated against [Readme.md:L194-L206].*
+*Flowchart validated against [Readme.md:L209-L221].*
 
 ---
 
@@ -132,14 +132,14 @@ flowchart TD
 
 | Aspect | Expectation |
 |---|---|
-| **Input** | A single numeric `percentage`, produced upstream by F-004 as `(total / 500) * 100` [Readme.md:L192]. |
-| **Output** | Exactly one letter-grade string (`'A+'`, `'A'`, `'B'`, `'C'`, `'D'`, or `'F'`) assigned to the local `grade` variable [Readme.md:L194-L206] and written to the rendered DOM at `#grade` [Readme.md:L212]. |
-| **Determinism / totality** | Every `percentage` maps to **exactly one** grade. The ordered cascade is mutually exclusive (the implicit upper bounds prevent overlap) and the `'F'` default makes it total — no gaps and no overlaps [Readme.md:L194-L206]. |
-| **Default `'F'` retained** | When every threshold test fails (`percentage < 50`, including the `0` that results from all-blank inputs), `grade` keeps its initial value `'F'` [Readme.md:L194]. The default guarantees `grade` is never empty or `undefined`. |
-| **Boundary behavior (maps UP)** | All comparisons use `>=`, so exact boundaries map to the **higher** grade: exactly `90 → A+`, exactly `80 → A`, …, exactly `50 → D` [Readme.md:L196-L204]. A value just under a threshold (e.g. `49.99`) falls to the band below. |
-| **No clamping** | Marks are unvalidated and uncapped, so `percentage` is **not** constrained to `[0, 100]`. A `percentage > 100` still yields `A+` and a negative `percentage` still yields `F` [Readme.md:L194-L206]. The full no-input-validation invariant is owned by [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
-| **Side effects** | None beyond the single DOM write at `#grade` [Readme.md:L212]; grade assignment performs no I/O, network, or persistence. |
-| **Error modes** | None internal to grade assignment — the cascade contains no operations that can throw, so any `percentage` resolves to a grade [Readme.md:L194-L206]. Upstream, the `\|\| 0` no-NaN guard defaults blank/falsy mark fields to `0` before parsing, so the `percentage` fed into the cascade is computed from numeric marks (see [`../reference/data-schema.md`](../reference/data-schema.md)). |
+| **Input** | A single numeric `percentage`, produced upstream by F-004 as `(total / 500) * 100` [Readme.md:L207]. |
+| **Output** | Exactly one letter-grade string (`'A+'`, `'A'`, `'B'`, `'C'`, `'D'`, or `'F'`) assigned to the local `grade` variable [Readme.md:L209-L221] and written to the rendered DOM at `#grade` [Readme.md:L227]. |
+| **Determinism / totality** | Every `percentage` maps to **exactly one** grade. The ordered cascade is mutually exclusive (the implicit upper bounds prevent overlap) and the `'F'` default makes it total — no gaps and no overlaps [Readme.md:L209-L221]. |
+| **Default `'F'` retained** | When every threshold test fails (`percentage < 50`, including the `0` that results from all-blank inputs), `grade` keeps its initial value `'F'` [Readme.md:L209]. The default guarantees `grade` is never empty or `undefined`. |
+| **Boundary behavior (maps UP)** | All comparisons use `>=`, so exact boundaries map to the **higher** grade: exactly `90 → A+`, exactly `80 → A`, …, exactly `50 → D` [Readme.md:L211-L219]. A value just under a threshold (e.g. `49.99`) falls to the band below. |
+| **No clamping** | Marks are unvalidated and uncapped, so `percentage` is **not** constrained to `[0, 100]`. A `percentage > 100` still yields `A+` and a negative `percentage` still yields `F` [Readme.md:L209-L221]. The full no-input-validation invariant is owned by [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
+| **Side effects** | None beyond the single DOM write at `#grade` [Readme.md:L227]; grade assignment performs no I/O, network, or persistence. |
+| **Error modes** | None internal to grade assignment — the cascade contains no operations that can throw, so any `percentage` resolves to a grade [Readme.md:L209-L221]. Upstream, the `\|\| 0` no-NaN guard defaults blank/falsy mark fields to `0` before parsing, so the `percentage` fed into the cascade is computed from numeric marks (see [`../reference/data-schema.md`](../reference/data-schema.md)). |
 
 **Worked examples** (illustrating boundary and default behavior):
 

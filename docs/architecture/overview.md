@@ -11,9 +11,9 @@ content on this page is **code-grounded** in the application source embedded in 
 repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]`
 citation.
 
-**Source Location:** [Readme.md:L1-L21] — the project Overview and Project Structure tree. The
+**Source Location:** [Readme.md:L1-L36] — the project Overview and Project Structure tree. The
 full application source (`index.html`, `style.css`, and `script.js`) is embedded further down the
-same file, within language-tagged fenced code blocks, at [Readme.md:L27-L238].
+same file, within language-tagged fenced code blocks, at [Readme.md:L42-L253].
 
 ---
 
@@ -27,13 +27,13 @@ no server round-trip; the entire workflow happens in a single browser tab during
 Architecturally, the application is deliberately minimal:
 
 - **No backend, no persistence, no build pipeline.** The project is plain HTML, CSS, and vanilla
-  JavaScript, with jsPDF as its only library [Readme.md:L257-L260]; there is nothing to compile,
+  JavaScript, with jsPDF as its only library [Readme.md:L272-L275]; there is nothing to compile,
   bundle, migrate, or deploy.
 - **Zero-install, client-side execution.** Running the app is simply: download the project and
   open `index.html` in a browser, then enter the details, click **Generate Report**, and click
-  **Download PDF** [Readme.md:L264-L268]. All logic runs in the browser.
+  **Download PDF** [Readme.md:L279-L283]. All logic runs in the browser.
 - **One external dependency.** The only third-party library is **jsPDF 2.5.1**, loaded at runtime
-  from the **cdnjs** CDN by a single `<script>` tag in the document `<head>` [Readme.md:L38]:
+  from the **cdnjs** CDN by a single `<script>` tag in the document `<head>` [Readme.md:L53]:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -69,7 +69,7 @@ authoritative home of each feature; this overview only points at them:
 
 The presentation layer, **F-008 Static Visual Styling**, is cross-cutting: it styles the
 **form inputs** and the **rendered DOM** report card without affecting computation or export
-[Readme.md:L91-L155] (see [`../functionality/styling.md`](../functionality/styling.md)).
+[Readme.md:L106-L170] (see [`../functionality/styling.md`](../functionality/styling.md)).
 
 ---
 
@@ -79,13 +79,13 @@ The system is working correctly when both of its outputs are correct:
 
 - **A correct on-screen report.** After the user clicks **Generate Report**, the **rendered DOM**
   report card shows the student name and roll number, a per-subject marks table, the total, the
-  percentage to two decimal places, and the grade [Readme.md:L208-L212].
+  percentage to two decimal places, and the grade [Readme.md:L223-L227].
 - **A downloadable PDF that matches the rendered values.** After the user clicks **Download PDF**,
   the saved file `<name>_Report.pdf` contains the same name, roll number, total, percentage, and
-  grade that are shown on screen [Readme.md:L220-L236].
+  grade that are shown on screen [Readme.md:L235-L251].
 
 These two criteria are linked **by construction**: `downloadPDF()` builds the PDF by reading the
-**rendered DOM** report card rather than the **form inputs** [Readme.md:L220-L224], so the PDF
+**rendered DOM** report card rather than the **form inputs** [Readme.md:L235-L239], so the PDF
 reflects exactly what `generateReport()` last rendered. This **DOM-read invariant** — and the
 resulting precondition that **Generate Report must run before Download PDF** — is defined once in
 [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) (the single source
@@ -113,15 +113,15 @@ flowchart LR
     CDN["cdnjs<br/>jsPDF 2.5.1 UMD"]
     PDF["PDF artifact<br/>name_Report.pdf"]
     User -->|"enter details, click buttons"| HTML
-    HTML -->|"loads stylesheet (L35)"| CSS
-    HTML -->|"loads logic (L81)"| JS
-    HTML -->|"loads library (L38)"| CDN
-    CDN -.->|"window.jspdf (L216)"| JS
-    JS -->|"doc.save (L236)"| PDF
+    HTML -->|"loads stylesheet (L50)"| CSS
+    HTML -->|"loads logic (L96)"| JS
+    HTML -->|"loads library (L53)"| CDN
+    CDN -.->|"window.jspdf (L231)"| JS
+    JS -->|"doc.save (L251)"| PDF
     PDF -->|"downloaded"| User
 ```
 
-*Diagram #1 — High-level architecture; validated against [Readme.md:L35, L38, L81, L216, L236].*
+*Diagram #1 — High-level architecture; validated against [Readme.md:L50, L53, L96, L231, L251].*
 
 For the three logical components and the jsPDF dependency in detail, see
 [`component-model.md`](component-model.md); for the end-to-end, DOM-mediated data flow and the

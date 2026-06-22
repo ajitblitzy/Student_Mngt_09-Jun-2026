@@ -6,7 +6,7 @@ This page identifies the **logical components** of the Student Report Generator,
 **responsibilities** each one owns, and how they **relate at runtime**. The application is a
 single-page, client-only utility composed of three logical components — **presentation markup**,
 **presentation styling**, and **behavioral logic** — plus one **external dependency**, the jsPDF
-library loaded from a CDN [Readme.md:L27-L238].
+library loaded from a CDN [Readme.md:L42-L253].
 
 All content on this page is **code-grounded**: every technical claim carries an inline
 `[Readme.md:Lx-Ly]` citation back to the application source, which is embedded inside the
@@ -15,7 +15,7 @@ connect at runtime*; it deliberately does **not** restate the full element table
 tables, or function contracts owned by the API-reference and dependency documents — it **links**
 to them instead.
 
-**Source Location:** [Readme.md:L27-L238] — the embedded `index.html`, `style.css`, and
+**Source Location:** [Readme.md:L42-L253] — the embedded `index.html`, `style.css`, and
 `script.js` fenced code blocks.
 
 ---
@@ -29,22 +29,22 @@ and dependency documents — this page summarizes and links rather than duplicat
 
 | Component | Role | Source | Key Surface / Responsibilities |
 |---|---|---|---|
-| **`index.html`** — presentation markup | Defines the page structure: input form, action buttons, and report-card placeholders | [Readme.md:L27-L85] | Form inputs `#studentName`, `#rollNumber`, `#maths`, `#science`, `#english`, `#history`, `#computer` [Readme.md:L46-L53]; action buttons wired to `generateReport()` / `downloadPDF()` [Readme.md:L55-L56]; report-card placeholders `#rName`, `#rRoll`, `#marksTable`, `#totalMarks`, `#percentage`, `#grade` [Readme.md:L59-L78] |
-| **`style.css`** — presentation styling | Static visual presentation (feature **F-008**) | [Readme.md:L91-L155] | Centered `.container` layout and `.form-section` grid; color palette (button `#007bff`, hover `#0056b3`, page background `#f4f6f8`); table styling (`border-collapse`, bordered `th`/`td`) |
-| **`script.js`** — behavioral logic | Computation, on-screen rendering, and PDF export | [Readme.md:L161-L238] | Public functions `generateReport()` [Readme.md:L162-L213] and `downloadPDF()` [Readme.md:L215-L237] |
-| **jsPDF 2.5.1** — external dependency | Client-side PDF generation library (cdnjs) | [Readme.md:L38] | UMD bundle loaded into `<head>`; exposes the `window.jspdf` global consumed by `downloadPDF()` [Readme.md:L216] |
+| **`index.html`** — presentation markup | Defines the page structure: input form, action buttons, and report-card placeholders | [Readme.md:L42-L100] | Form inputs `#studentName`, `#rollNumber`, `#maths`, `#science`, `#english`, `#history`, `#computer` [Readme.md:L61-L68]; action buttons wired to `generateReport()` / `downloadPDF()` [Readme.md:L70-L71]; report-card placeholders `#rName`, `#rRoll`, `#marksTable`, `#totalMarks`, `#percentage`, `#grade` [Readme.md:L74-L93] |
+| **`style.css`** — presentation styling | Static visual presentation (feature **F-008**) | [Readme.md:L106-L170] | Centered `.container` layout and `.form-section` grid; color palette (button `#007bff`, hover `#0056b3`, page background `#f4f6f8`); table styling (`border-collapse`, bordered `th`/`td`) |
+| **`script.js`** — behavioral logic | Computation, on-screen rendering, and PDF export | [Readme.md:L176-L253] | Public functions `generateReport()` [Readme.md:L177-L228] and `downloadPDF()` [Readme.md:L230-L252] |
+| **jsPDF 2.5.1** — external dependency | Client-side PDF generation library (cdnjs) | [Readme.md:L53] | UMD bundle loaded into `<head>`; exposes the `window.jspdf` global consumed by `downloadPDF()` [Readme.md:L231] |
 
 ### Presentation markup — `index.html`
 
-The markup is the logical component that defines the entire page structure [Readme.md:L27-L85]. It
+The markup is the logical component that defines the entire page structure [Readme.md:L42-L100]. It
 declares the **form inputs** the user types into — the two identity fields `#studentName` and
 `#rollNumber` and the five subject-mark fields `#maths`, `#science`, `#english`, `#history`, and
-`#computer` [Readme.md:L46-L53] — the two **action buttons** wired by inline `onclick` attributes
-to `generateReport()` and `downloadPDF()` [Readme.md:L55-L56], and the **report-card
+`#computer` [Readme.md:L61-L68] — the two **action buttons** wired by inline `onclick` attributes
+to `generateReport()` and `downloadPDF()` [Readme.md:L70-L71], and the **report-card
 placeholders** that the logic writes into: `#rName`, `#rRoll`, `#marksTable`, `#totalMarks`,
-`#percentage`, and `#grade` [Readme.md:L59-L78]. The markup is also the integration point for the
-other components: it links the stylesheet [Readme.md:L35], loads the jsPDF CDN script
-[Readme.md:L38], and loads `script.js` at the end of `<body>` [Readme.md:L81]. For the full
+`#percentage`, and `#grade` [Readme.md:L74-L93]. The markup is also the integration point for the
+other components: it links the stylesheet [Readme.md:L50], loads the jsPDF CDN script
+[Readme.md:L53], and loads `script.js` at the end of `<body>` [Readme.md:L96]. For the full
 element/ID reference table and the button-to-function wiring, see
 [`../api-reference/html-structure.md`](../api-reference/html-structure.md); this page does not
 duplicate that table.
@@ -52,7 +52,7 @@ duplicate that table.
 ### Presentation styling — `style.css`
 
 The styling is a **static and purely presentational** logical component — it owns feature
-**F-008** and has no effect on computation or export logic [Readme.md:L91-L155]. It establishes
+**F-008** and has no effect on computation or export logic [Readme.md:L106-L170]. It establishes
 the layout (a centered `.container` capped at `800px` wide and a CSS-grid `.form-section` for the
 inputs), the color palette (the blue action button `#007bff` darkening to `#0056b3` on hover, on a
 light-grey `#f4f6f8` page background), and the marks-table styling (`border-collapse` with bordered
@@ -63,20 +63,20 @@ responsiveness note (viewport meta only; no `@media` rules), see
 ### Behavioral logic — `script.js`
 
 The behavioral logic is the logical component that holds the application's two public functions
-[Readme.md:L161-L238]. `generateReport()` reads the **form inputs**, computes the total,
+[Readme.md:L176-L253]. `generateReport()` reads the **form inputs**, computes the total,
 percentage, and grade, and writes the results into the **rendered DOM** report card
-[Readme.md:L162-L213]. `downloadPDF()` reads the **rendered DOM** report card — not the form
-inputs — and exports it as a PDF via jsPDF [Readme.md:L215-L237]. Both functions are parameterless
+[Readme.md:L177-L228]. `downloadPDF()` reads the **rendered DOM** report card — not the form
+inputs — and exports it as a PDF via jsPDF [Readme.md:L230-L252]. Both functions are parameterless
 and side-effecting. For exact signatures, the elements each function reads and writes, side
 effects, and the per-function contracts, see
 [`../api-reference/script-js.md`](../api-reference/script-js.md).
 
 ### External integration — jsPDF 2.5.1 (cdnjs)
 
-jsPDF is the application's **sole external dependency** [Readme.md:L38]. It is loaded as a UMD
+jsPDF is the application's **sole external dependency** [Readme.md:L53]. It is loaded as a UMD
 (minified) bundle from the cdnjs CDN by a `<script>` tag placed in the document `<head>`
-[Readme.md:L38], which installs the lowercase `window.jspdf` global. Inside `downloadPDF()`, the
-capitalized `jsPDF` constructor is destructured from that `window.jspdf` global [Readme.md:L216].
+[Readme.md:L53], which installs the lowercase `window.jspdf` global. Inside `downloadPDF()`, the
+capitalized `jsPDF` constructor is destructured from that `window.jspdf` global [Readme.md:L231].
 Because the library is pulled over the network, its availability is a **precondition** of PDF
 export. For the integration contract, the CDN-availability precondition, and the version-pinning
 note, see [`../dependencies.md`](../dependencies.md).
@@ -86,9 +86,9 @@ note, see [`../dependencies.md`](../dependencies.md).
 ### Note: Logical vs. Physical Components
 
 The project's ASCII tree advertises `index.html`, `style.css`, and `script.js` as **standalone
-files** at the repository root [Readme.md:L14-L21]. In the current repository, however, these
+files** at the repository root [Readme.md:L29-L36]. In the current repository, however, these
 three sources do **not** exist as separate files — they exist **embedded inside `Readme.md`**,
-within language-tagged fenced code blocks [Readme.md:L27-L238]. This documentation therefore
+within language-tagged fenced code blocks [Readme.md:L42-L253]. This documentation therefore
 treats them as **logical components**: distinct, named units of responsibility identified by their
 source line ranges rather than by physical file boundaries. Physically extracting the embedded
 code into separate `index.html`, `style.css`, and `script.js` files would be a **code change** and
@@ -104,21 +104,21 @@ and how the logic reads from and writes to the markup's **rendered DOM** and cal
 
 ```mermaid
 flowchart TD
-    HTML["index.html — markup<br/>L27-L85"]
-    CSS["style.css — styling<br/>L91-L155"]
-    JS["script.js — logic<br/>generateReport, downloadPDF<br/>L161-L238"]
-    JSPDF["jsPDF 2.5.1 CDN<br/>window.jspdf — L38"]
-    HTML -->|"link stylesheet (L35)"| CSS
-    HTML -->|"script src jsPDF (L38)"| JSPDF
-    HTML -->|"script src script.js (L81)"| JS
-    JS -->|"reads inputs / writes report DOM (L163-L212)"| HTML
-    JS -->|"destructure window.jspdf (L216)"| JSPDF
+    HTML["index.html — markup<br/>L42-L100"]
+    CSS["style.css — styling<br/>L106-L170"]
+    JS["script.js — logic<br/>generateReport, downloadPDF<br/>L176-L253"]
+    JSPDF["jsPDF 2.5.1 CDN<br/>window.jspdf — L53"]
+    HTML -->|"link stylesheet (L50)"| CSS
+    HTML -->|"script src jsPDF (L53)"| JSPDF
+    HTML -->|"script src script.js (L96)"| JS
+    JS -->|"reads inputs / writes report DOM (L178-L227)"| HTML
+    JS -->|"destructure window.jspdf (L231)"| JSPDF
 ```
 
-*Diagram validated against the source load and access lines [Readme.md:L35, L38, L81, L163-L212, L216].*
+*Diagram validated against the source load and access lines [Readme.md:L50, L53, L96, L178-L227, L231].*
 
 The three load relationships are declared verbatim in the markup — the stylesheet link, the jsPDF
-CDN script, and the trailing `script.js` include [Readme.md:L35, L38, L81]:
+CDN script, and the trailing `script.js` include [Readme.md:L50, L53, L96]:
 
 ```html
 <link rel="stylesheet" href="style.css">

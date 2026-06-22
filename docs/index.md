@@ -13,7 +13,7 @@ the documentation stays traceable to — and verifiable against — the code.
 
 The application itself is a **zero-install, browser-only static front-end**: it is built from
 plain HTML, CSS, and vanilla JavaScript, with a single third-party library — **jsPDF** — loaded
-from a CDN [Readme.md:L255-L260]. There is no backend, no database, no build step, and nothing
+from a CDN [Readme.md:L270-L275]. There is no backend, no database, no build step, and nothing
 to install; the app runs entirely in the browser by opening `index.html`.
 
 This hub is organized to satisfy two governing goals derived from the project requirement —
@@ -42,14 +42,14 @@ feature to the layer it belongs to and the primary document that covers it.
 
 | Layer | Feature ID | Feature | Primary Doc |
 |---|---|---|---|
-| Data Entry | F-001 | Identity Capture (name, roll) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L46-L47, L162-L164] |
-| Data Entry | F-002 | Marks Entry (5 subjects) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L49-L53, L166-L172] |
-| Computation | F-003 | Total Aggregation | [functionality/computation.md](functionality/computation.md) — [Readme.md:L174-L190] |
-| Computation | F-004 | Percentage | [functionality/computation.md](functionality/computation.md) — [Readme.md:L192, L211] |
-| Computation | F-005 | Grade Assignment | [functionality/grading.md](functionality/grading.md) — [Readme.md:L194-L206] |
-| Presentation | F-006 | On-Screen Report Render | [functionality/report-rendering.md](functionality/report-rendering.md) — [Readme.md:L59-L78, L176-L212] |
-| Export | F-007 | PDF Export | [functionality/pdf-export.md](functionality/pdf-export.md) — [Readme.md:L215-L237] |
-| Presentation | F-008 | Static Visual Styling | [functionality/styling.md](functionality/styling.md) — [Readme.md:L91-L155] |
+| Data Entry | F-001 | Identity Capture (name, roll) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L61-L62, L177-L179] |
+| Data Entry | F-002 | Marks Entry (5 subjects) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L64-L68, L181-L187] |
+| Computation | F-003 | Total Aggregation | [functionality/computation.md](functionality/computation.md) — [Readme.md:L189-L205] |
+| Computation | F-004 | Percentage | [functionality/computation.md](functionality/computation.md) — [Readme.md:L207, L226] |
+| Computation | F-005 | Grade Assignment | [functionality/grading.md](functionality/grading.md) — [Readme.md:L209-L221] |
+| Presentation | F-006 | On-Screen Report Render | [functionality/report-rendering.md](functionality/report-rendering.md) — [Readme.md:L74-L93, L191-L227] |
+| Export | F-007 | PDF Export | [functionality/pdf-export.md](functionality/pdf-export.md) — [Readme.md:L230-L252] |
+| Presentation | F-008 | Static Visual Styling | [functionality/styling.md](functionality/styling.md) — [Readme.md:L106-L170] |
 
 The diagram below shows, at a glance, how the three embedded source components plus the jsPDF
 dependency map onto the four functional layers. The detailed component and data-flow diagrams
@@ -57,10 +57,10 @@ live under [`architecture/`](architecture/component-model.md).
 
 ```mermaid
 flowchart LR
-    HTML["index.html<br/>[L27-L85]"]
-    CSS["style.css<br/>[L91-L155]"]
-    JS["script.js<br/>[L161-L238]"]
-    DEP["jsPDF 2.5.1 (CDN)<br/>[L38]"]
+    HTML["index.html<br/>[L42-L100]"]
+    CSS["style.css<br/>[L106-L170]"]
+    JS["script.js<br/>[L176-L253]"]
+    DEP["jsPDF 2.5.1 (CDN)<br/>[L53]"]
 
     HTML --> DE["Data Entry<br/>F-001, F-002"]
     JS --> DE
@@ -122,7 +122,7 @@ Contract** block.
 
 - [Data Schema](reference/data-schema.md) — **single source of truth** for the fixed values:
   the five subjects, the per-subject maximum of `100`, the `500`-point total, and the six grade
-  thresholds [Readme.md:L166-L206].
+  thresholds [Readme.md:L181-L221].
 
 ### 6. Behavioral Contracts
 
@@ -133,7 +133,7 @@ Contract** block.
 ### 7. Dependencies
 
 - [Dependencies](dependencies.md) — the jsPDF **2.5.1** integration via cdnjs, the `window.jspdf`
-  global contract, and the CDN-availability precondition [Readme.md:L38].
+  global contract, and the CDN-availability precondition [Readme.md:L53].
 
 ---
 
@@ -149,11 +149,11 @@ deliberately **not** restated elsewhere:
 
 - [`reference/data-schema.md`](reference/data-schema.md) owns the **fixed values** — the five
   subjects, the per-subject maximum of `100`, the `500`-point denominator, and the six grade
-  thresholds [Readme.md:L166-L206].
+  thresholds [Readme.md:L181-L221].
 - [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) owns the
   **invariants and preconditions** — including the rebuild-from-scratch rendering, the no-NaN
   guard, the fixed two-decimal percentage precision, the default `'F'` grade, and the
-  **DOM-read invariant** [Readme.md:L161-L238].
+  **DOM-read invariant** [Readme.md:L176-L253].
 
 Other documents **link to** these two rather than copying their content, so there is exactly one
 place to update if the underlying code changes.
@@ -174,15 +174,15 @@ place to update if the underlying code changes.
 ## Source & Citation Note
 
 The project's `Readme.md` Project Structure tree lists `index.html`, `style.css`, and
-`script.js` as standalone files [Readme.md:L14-L21]. In the current repository, however, these
+`script.js` as standalone files [Readme.md:L29-L36]. In the current repository, however, these
 source files exist **only as fenced code blocks embedded inside `Readme.md`**. All line-number
 citations throughout this documentation therefore refer to `Readme.md`:
 
 | Logical Source File | Embedded Location | Cite As |
 |---|---|---|
-| `index.html` (markup) | [Readme.md:L27-L85] | `[Readme.md:L27-L85]` |
-| `style.css` (styles) | [Readme.md:L91-L155] | `[Readme.md:L91-L155]` |
-| `script.js` (logic) | [Readme.md:L161-L238] | `[Readme.md:L161-L238]` |
+| `index.html` (markup) | [Readme.md:L42-L100] | `[Readme.md:L42-L100]` |
+| `style.css` (styles) | [Readme.md:L106-L170] | `[Readme.md:L106-L170]` |
+| `script.js` (logic) | [Readme.md:L176-L253] | `[Readme.md:L176-L253]` |
 
 This documentation is purely additive and does **not** modify any source code. If the embedded
 code ever changes, the citations and any affected content must be updated to match.
