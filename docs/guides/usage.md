@@ -92,7 +92,7 @@ defect to fix in code.
 |---|---|---|
 | **PDF is blank, or shows old data.** | You didn't click **Generate Report** first, or you edited the form after generating and didn't regenerate. `downloadPDF()` reads the **rendered DOM**, not the **form inputs** [Readme.md:L220-L224] (the **DOM-read invariant**). | Click **Generate Report**, then **Download PDF**; regenerate after any edit. See [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
 | **Download does nothing; the browser console shows a `TypeError`.** | The jsPDF CDN script failed to load (offline, firewall, or CDN outage), so `window.jspdf` is `undefined` and the line `const { jsPDF } = window.jspdf;` throws [Readme.md:L38, L216]. The function has no `try`/`catch` and no programmatic error handling [Readme.md:L215-L237], so the error surfaces only in the console — there is no in-app message. | Ensure internet access and reload the page so the CDN script resolves. See [`../dependencies.md`](../dependencies.md). |
-| **A subject's marks are treated as `0`.** | A blank or non-numeric mark defaults to `0` via the **no-NaN guard** applied to each subject's `.value` (verbatim form shown below the table) — a blank `.value` is the empty string (falsy), so it becomes `0` *before* `parseInt` runs, never `NaN` [Readme.md:L167-L171]. | Enter a numeric value for every subject you intend to count. See [`../functionality/data-entry.md`](../functionality/data-entry.md). |
+| **A subject's marks are treated as `0`.** | A blank/falsy mark field defaults to `0` via the **no-NaN guard** applied to each subject's `.value` (verbatim form shown below the table) — a blank `.value` is the empty string (falsy), so it becomes `0` *before* `parseInt` runs, contributing `0` rather than `NaN` [Readme.md:L167-L171]. The browser's `<input type="number">` control typically clears non-numeric typing to an empty `.value`, which the guard then treats as `0`; the JavaScript itself does **not** validate arbitrary non-empty invalid strings. | Enter a numeric value for every subject you intend to count. See [`../functionality/data-entry.md`](../functionality/data-entry.md). |
 | **The percentage seems low.** | The denominator is fixed at **500** (five subjects × 100), so any subject left blank counts as `0` and lowers the result: `(total / 500) * 100` [Readme.md:L192]. | Fill all five subjects, or read the score as always being out of 500. See [`../reference/data-schema.md`](../reference/data-schema.md). |
 
 The **no-NaN guard**, verbatim from the source, wraps each subject's `.value` so a blank field
@@ -102,8 +102,9 @@ becomes `0` rather than `NaN` [Readme.md:L167-L171]:
 Maths: parseInt(document.getElementById('maths').value || 0),
 ```
 
-This is a documented expectation of the code, not a range check: the guard prevents `NaN`, but it
-does **not** clamp negatives or cap a mark at 100. See
+This is a documented expectation of the code, not a range check: the guard prevents `NaN` **only**
+for a blank/falsy field — it is **not** a general invalid-input validator and does **not** clamp
+negatives or cap a mark at 100. See
 [`../reference/data-schema.md`](../reference/data-schema.md) and
 [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) for the full schema
 and invariants.

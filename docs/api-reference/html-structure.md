@@ -34,7 +34,7 @@ implied by the README's project tree does not physically exist as a separate fil
 The markup defines the elements that the behavioral logic in `script.js` addresses **by `id`**, plus two action buttons wired by inline `onclick` attributes [Readme.md:L55-L56]. There is no framework and no event-listener registration — the wiring is entirely declarative HTML, and `script.js` loads last, at the end of `<body>`, so the DOM exists before it runs [Readme.md:L81].
 
 - **Form inputs (read).** Seven `<input>` fields — two identity fields and five subject-mark fields [Readme.md:L46-L53] — are read by `generateReport()` via `document.getElementById(...)` when **Generate Report** is clicked [Readme.md:L163-L172].
-- **Report-card placeholders (written, then re-read).** Six placeholder elements inside the always-present `#reportCard` block [Readme.md:L59-L78] are populated by `generateReport()` [Readme.md:L208-L212] and later **re-read** by `downloadPDF()` — the **DOM-read invariant** [Readme.md:L220-L224].
+- **Report-card placeholders (written, then re-read).** Six placeholder elements inside the always-present `#reportCard` block [Readme.md:L59-L78] are populated by `generateReport()`; **five** of them — `#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade` [Readme.md:L208-L212] — are later **re-read** by `downloadPDF()` (the **DOM-read invariant** [Readme.md:L220-L224]), while `#marksTable` is rebuilt [Readme.md:L176-L189] but **not** re-read.
 - **Buttons (wiring only).** The two action buttons carry **no `id`**; they invoke `generateReport()` and `downloadPDF()` purely through inline `onclick` [Readme.md:L55-L56].
 
 The structural **contract** is therefore that every `id` below must exist in the DOM, spelled exactly as shown, for the script to function. The detailed element/ID reference and the function wiring follow.
@@ -45,7 +45,8 @@ The structural **contract** is therefore that every `id` below must exist in the
 
 The markup defines **thirteen** identified elements that `script.js` addresses by `id`: seven
 **form inputs** that `generateReport()` reads, and six **report-card placeholders** that
-`generateReport()` writes and `downloadPDF()` re-reads. The two action buttons carry **no `id`** —
+`generateReport()` writes — **five** of which `downloadPDF()` then re-reads, while `#marksTable` is
+rebuilt but not re-read. The two action buttons carry **no `id`** —
 they are wired purely by inline `onclick` attributes [Readme.md:L55-L56]. The sub-tables below
 group these elements by role; the **Read or Written by** column cross-references the exact
 `script.js` line that touches each element.

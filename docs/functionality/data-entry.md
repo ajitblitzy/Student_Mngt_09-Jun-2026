@@ -77,8 +77,10 @@ placement: the `|| 0` defaults a blank or otherwise falsy `.value` to `0` **befo
 empty number field has `.value === ""` (falsy), which becomes `0`, so blank fields
 contribute `0` rather than `NaN`. The `<input type="number">` control already restricts
 most non-numeric typing, but a cleared field still yields `""`; the guard handles that
-case. This guard prevents `NaN`; it does **not** validate ranges (see the
-Expected Behavior / Contract below).
+case. This guard prevents `NaN` **only** for a blank/falsy `.value` — it is **not** a
+general invalid-input validator (it adds no post-`parseInt` fallback, so an arbitrary
+non-empty invalid string would still parse to `NaN`) and it does **not** validate ranges
+(see the Expected Behavior / Contract below).
 
 | Subject | Input ID | Type | Default when blank |
 |---|---|---|---|
@@ -104,7 +106,7 @@ grounded in the cited source.
 |---|---|---|
 | **Inputs** | Two identity strings (`#studentName`, `#rollNumber`) plus five numeric marks (`#maths`, `#science`, `#english`, `#history`, `#computer`). | [Readme.md:L46-L53] |
 | **Acceptance (no validation)** | All inputs are accepted **as-is**. Identity strings are **not** validated, trimmed, or required; marks are **not** range-checked. | [Readme.md:L163-L164], [Readme.md:L166-L172] |
-| **Blank / invalid marks → `0`** | The **no-NaN guard** `parseInt(... .value \|\| 0)` makes a blank/falsy `.value` (e.g. `""`) default to `0`; a mark is therefore **never** `NaN`. | [Readme.md:L167-L171] |
+| **Blank/falsy marks → `0`** | The **no-NaN guard** `parseInt(... .value \|\| 0)` defaults a blank or otherwise falsy `.value` (e.g. `""`) to `0` *before* `parseInt` runs, so a blank/falsy field contributes `0` rather than `NaN`. The guard defaults only blank/falsy `.value` values; it is **not** a general invalid-input validator and adds no post-`parseInt` fallback, so an arbitrary non-empty invalid string would still parse to `NaN`. | [Readme.md:L167-L171] |
 | **No clamping** | Negative values and values greater than `100` are accepted unchanged — there is **no** min/max enforcement. The *intended* per-subject maximum is `100` (see [`../reference/data-schema.md`](../reference/data-schema.md)) but it is **not** enforced. | [Readme.md:L166-L172] |
 | **Preconditions** | The seven input element IDs must exist in the DOM exactly as spelled (see [`../api-reference/html-structure.md`](../api-reference/html-structure.md)). A missing ID would make `getElementById` return `null`, causing a `TypeError` downstream; the full precondition detail lives in [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). | [Readme.md:L46-L53] |
 | **Side effects** | **None** in the data-entry step itself — the values are only *read* here. Computation and rendering happen later within the same `generateReport()` call. | [Readme.md:L162-L172] |

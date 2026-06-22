@@ -139,10 +139,10 @@ Contract** block.
 
 ## Reading Guide & Navigation Model
 
-**Hub-and-spoke navigation.** This page is the hub. The repository-root `Readme.md` links here
-through its `## Documentation` section, and every document in the `docs/` tree links **back to
-this hub** from its own *Related Documents* section. Start here, follow a spoke to the topic you
-need, and use the back-link to return.
+**Hub-and-spoke navigation.** This page is the hub. The repository-root `Readme.md` is *planned to*
+link here through a `## Documentation` section in the final checkpoint; today, every document in the
+`docs/` tree already links **back to this hub** from its own *Related Documents* section. Start here,
+follow a spoke to the topic you need, and use the back-link to return.
 
 **Single source of truth (no duplication, no drift).** Two documents are authoritative and are
 deliberately **not** restated elsewhere:
