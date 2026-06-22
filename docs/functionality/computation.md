@@ -26,22 +26,28 @@ and writes its results to the rendered DOM at the end of the same function [Read
 ## F-003 Total Aggregation
 
 The total is the sum of the five subject marks. A `total` accumulator is initialized to `0`
-[Readme.md:L174], and each subject's numeric value is added to it inside a `for...in` loop over the
-`subjects` object [Readme.md:L179-L190]:
+[Readme.md:L174]:
 
 ```javascript
 let total = 0;
-total += subjects[subject];   // accumulate each subject's marks
+```
+
+Each subject's numeric value is then added to it inside a `for...in` loop over the `subjects`
+object [Readme.md:L179-L190]; the per-subject accumulation statement is [Readme.md:L180]:
+
+```javascript
+total += subjects[subject];
 ```
 
 - `total` starts at `0` [Readme.md:L174] and is incremented once per subject by
   `total += subjects[subject];` [Readme.md:L180], so after the loop it holds the arithmetic sum of
   all five marks [Readme.md:L179-L190].
-- Because the upstream **no-NaN guard** — `parseInt(... .value || 0)` — coerces every blank or
-  otherwise falsy field to `0` *before* the value enters the `subjects` object [Readme.md:L166-L172],
-  each `subjects[subject]` is always a number. Consequently `total` is always a number and never
-  becomes `NaN` from an empty field. (The guard itself is documented in [`data-entry.md`](data-entry.md)
-  and [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md).)
+- Because the upstream **no-NaN guard** — `parseInt(... .value || 0)` — defaults every blank or
+  otherwise falsy mark field to `0` *before* the value enters the `subjects` object [Readme.md:L166-L172],
+  an empty field contributes `0` to the sum rather than `NaN`. The guard defaults only blank/falsy
+  values; it does not validate arbitrary non-empty input. (The guard itself is documented in
+  [`data-entry.md`](data-entry.md) and
+  [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md).)
 - The same `for...in` loop also appends a row to the marks table (`tableBody.innerHTML += row;`
   [Readme.md:L189]). That is a **rendering** concern, not a computation one, and is documented
   separately in [`report-rendering.md`](report-rendering.md). For this layer, only the

@@ -48,8 +48,10 @@ function behind the **Generate Report** button [Readme.md:L55].
 
 ### Signature
 
+Declared at [Readme.md:L162]:
+
 ```javascript
-function generateReport()   // [Readme.md:L162]
+function generateReport() {
 ```
 
 | Aspect | Value | Source |
@@ -101,8 +103,9 @@ this page summarizes them and links rather than duplicating the catalog.
   repopulates it, so each run yields a fresh table of exactly five rows and repeated runs never
   accumulate stale rows [Readme.md:L176-L177].
 - **No-NaN guard** — each subject is read with `parseInt(... .value || 0)`; the `|| 0` defaults a
-  blank/falsy `.value` to `0` *before* `parseInt` runs, so `total` is always numeric, never
-  `NaN` [Readme.md:L167-L171]. The guard does **not** clamp negatives or values above `100` —
+  blank/falsy `.value` to `0` *before* `parseInt` runs, so an empty field contributes `0` rather
+  than `NaN` [Readme.md:L167-L171]. The guard defaults only blank/falsy values; it does **not**
+  validate arbitrary non-empty input and does **not** clamp negatives or values above `100` —
   there is **no range validation anywhere** (the unenforced per-subject maximum is documented in
   [`../reference/data-schema.md`](../reference/data-schema.md)).
 - **Percentage formula** — `percentage = (total / 500) * 100`, using the fixed `500`-point
@@ -114,11 +117,17 @@ this page summarizes them and links rather than duplicating the catalog.
   ordered `if / else-if` cascade [Readme.md:L196-L206]; the `'F'` default is retained whenever
   every threshold test fails (percentage `< 50`).
 
-Representative excerpt — the no-NaN guard and the percentage formula (verbatim from the source):
+Representative excerpts, quoted verbatim from the source. The no-NaN guard on the first subject
+[Readme.md:L167]:
 
 ```javascript
-Maths: parseInt(document.getElementById('maths').value || 0), // L167 — no-NaN guard
-const percentage = (total / 500) * 100;                       // L192 — percentage formula
+Maths: parseInt(document.getElementById('maths').value || 0),
+```
+
+The percentage formula [Readme.md:L192]:
+
+```javascript
+const percentage = (total / 500) * 100;
 ```
 
 ### Worked example (illustrative)
@@ -137,8 +146,10 @@ behind the **Download PDF** button [Readme.md:L56].
 
 ### Signature
 
+Declared at [Readme.md:L215]:
+
 ```javascript
-function downloadPDF()   // [Readme.md:L215]
+function downloadPDF() {
 ```
 
 | Aspect | Value | Source |
@@ -150,12 +161,16 @@ function downloadPDF()   // [Readme.md:L215]
 ### Depends on
 
 `downloadPDF()` destructures the `jsPDF` constructor from the global `window.jspdf` namespace and
-instantiates a document [Readme.md:L216], [Readme.md:L218]:
+instantiates a document [Readme.md:L216-L218]:
 
 ```javascript
-const { jsPDF } = window.jspdf;   // L216 — throws TypeError if window.jspdf is undefined
-const doc = new jsPDF();          // L218
+const { jsPDF } = window.jspdf;
+
+const doc = new jsPDF();
 ```
+
+The destructuring line throws a `TypeError` if `window.jspdf` is `undefined` (see
+[Error handling](#error-handling) below).
 
 The lowercase `window.jspdf` global is populated by the jsPDF **2.5.1** UMD bundle loaded from the
 cdnjs `<script>` tag in the page `<head>` [Readme.md:L38]. The full CDN-availability contract is
@@ -212,11 +227,17 @@ directly and are the *expected* (unguarded) outcomes, not bugs to be patched her
   [Readme.md:L220-L224] reads empty strings from the never-populated report card, and the
   resulting PDF simply contains blank/default field values.
 
-Representative excerpt — the dependency destructure and the file save (verbatim from the source):
+Representative excerpts, quoted verbatim from the source. The dependency destructure
+[Readme.md:L216]:
 
 ```javascript
-const { jsPDF } = window.jspdf;   // L216 — throws TypeError if undefined
-doc.save(`${name}_Report.pdf`);   // L236 — saves <name>_Report.pdf
+const { jsPDF } = window.jspdf;
+```
+
+The file save [Readme.md:L236]:
+
+```javascript
+doc.save(`${name}_Report.pdf`);
 ```
 
 ---
@@ -231,7 +252,7 @@ These flowcharts mirror the authoritative diagrams in
 ```mermaid
 flowchart TD
     A["Read name and roll<br/>#studentName, #rollNumber (L163-L164)"]
-    B["Build subjects object, 5 subjects<br/>parseInt(value || 0) no-NaN guard (L166-L172)"]
+    B["Build subjects object (5 subjects)<br/>blank/falsy mark fields default to 0 before parseInt (L166-L172)"]
     C["Initialise total = 0 (L174)"]
     D["Clear marks table<br/>tableBody.innerHTML = '' rebuild-from-scratch (L177)"]
     E["Loop subjects: total += marks<br/>append table row (L179-L190)"]
@@ -276,7 +297,7 @@ precondition catalog lives in
 | **Outputs / postconditions** | The report card is fully populated (`#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade`) and `#marksTable` is rebuilt to **exactly 5 rows**. | [Readme.md:L179-L212] |
 | **Side effects** | DOM writes only — no network, no persistence, no storage. | [Readme.md:L176-L212] |
 | **Determinism** | Identical **form inputs** always produce identical output — no randomness, no time/`Date` dependency, no persistence. | [Readme.md:L162-L213] |
-| **Error modes** | Missing element IDs → `TypeError` on a `null` read. There is **no input validation** beyond the `\|\| 0` no-NaN guard; out-of-range or negative marks are accepted. | [Readme.md:L167-L171] |
+| **Error modes** | Missing element IDs → `TypeError` on a `null` read. There is **no input validation** beyond the `\|\| 0` no-NaN guard; out-of-range or negative marks are accepted. | [Readme.md:L163-L171], [Readme.md:L176-L212] |
 
 ### downloadPDF() — contract
 

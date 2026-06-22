@@ -31,7 +31,7 @@ The application reads exactly **five** subjects — in the fixed source order sh
 inside `generateReport()` [Readme.md:L166-L172]. Each value is read by element ID from a
 matching `<input type="number">` field [Readme.md:L49-L53].
 
-| Subject | Input ID | Type | Default (blank/invalid) |
+| Subject | Input ID | Type | Default (blank/falsy field) |
 |---|---|---|---|
 | Maths | `#maths` [Readme.md:L49] | `number` | `0` [Readme.md:L167] |
 | Science | `#science` [Readme.md:L50] | `number` | `0` [Readme.md:L168] |
@@ -41,8 +41,9 @@ matching `<input type="number">` field [Readme.md:L49-L53].
 
 Each mark is coerced with `parseInt(... .value || 0)`; the `|| 0` is the **no-NaN guard**, so
 a blank or otherwise falsy `.value` becomes `0` *before* `parseInt` runs — which is why the
-default for blank/invalid input is `0` [Readme.md:L167-L171]. This behavior belongs to feature
-**F-002 (Marks Entry)**.
+default for a blank/falsy field is `0` [Readme.md:L167-L171]. The guard defaults only
+blank/falsy `.value` values; it is **not** a general invalid-input validator. This behavior
+belongs to feature **F-002 (Marks Entry)**.
 
 ---
 

@@ -46,7 +46,7 @@ The application makes five behavioral guarantees. Each holds for every successfu
 | # | Invariant | Guarantee (one line) | Source |
 |---|---|---|---|
 | 1 | Rebuild-from-scratch rendering | The marks table is cleared before re-population, so each run yields a fresh table of exactly five rows. | [Readme.md:L176-L177] |
-| 2 | No-NaN guard | `parseInt(... .value \|\| 0)` defaults a blank/falsy field to `0`, so every subject value and `total` is always numeric — never `NaN`. | [Readme.md:L167-L171] |
+| 2 | No-NaN guard | `parseInt(... .value \|\| 0)` defaults a blank/falsy mark field to `0` before parsing, so an empty field contributes `0` rather than `NaN`. | [Readme.md:L167-L171] |
 | 3 | Fixed 2-decimal percentage precision | The *displayed* percentage is a 2-decimal string via `.toFixed(2)`; the internal value stays a full-precision number. | [Readme.md:L211] |
 | 4 | Default grade `'F'` | `grade` is initialized to `'F'` and retained whenever every threshold test fails (percentage `< 50`). | [Readme.md:L194] |
 | 5 | DOM-read invariant | `downloadPDF()` reads from the **rendered DOM** report card, **not** from the **form inputs**. | [Readme.md:L220-L224] |
@@ -239,8 +239,8 @@ are therefore the expected (unguarded) outcomes.
 
 ## Determinism Guarantee
 
-`generateReport()` is a **pure function of its inputs**: given identical **form inputs**, it
-always produces identical report-card output. The code reads only the form fields and writes
+`generateReport()` is a **deterministic function of its current form inputs**: given identical
+**form inputs**, it always produces identical report-card output. The code reads only the form fields and writes
 only the report card [Readme.md:L162-L213] — there is no randomness, no `Date`/time dependency,
 no persistence, and no external read, so the output depends solely on the entered values.
 

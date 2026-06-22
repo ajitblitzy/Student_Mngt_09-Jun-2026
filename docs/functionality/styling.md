@@ -33,13 +33,13 @@ The input form is laid out by `.form-section` as a vertical CSS grid with 10px g
 
 ### Palette
 
-The stylesheet uses a small, fixed palette. The page background is light grey, and the primary action buttons (Generate Report / Download PDF) are blue [Readme.md:L123-L130], darkening to a deeper blue on hover [Readme.md:L132-L134]:
+The stylesheet uses a small, fixed palette. The page background is light grey, and the primary action buttons (Generate Report / Download PDF) are blue [Readme.md:L123-L130], darkening to a deeper blue on hover [Readme.md:L132-L134]. The three literal surface/action colors are:
 
-```css
-background: #f4f6f8; /* page background (L94) */
-background: #007bff; /* button (L125) */
-background: #0056b3; /* button:hover (L133) */
-```
+| Color | Hex | Used by | Source |
+|---|---|---|---|
+| Page background (light grey) | `#f4f6f8` | `body` | [Readme.md:L94] |
+| Action button (blue) | `#007bff` | `button` | [Readme.md:L125] |
+| Button hover (deeper blue) | `#0056b3` | `button:hover` | [Readme.md:L133] |
 
 The card itself is white with a soft shadow rendered at `rgba(0,0,0,0.1)` [Readme.md:L102-L105]. The greys used for separators and borders are `#ddd` on the report-card top border [Readme.md:L136-L139] and `#ccc` on the table grid [Readme.md:L147-L149].
 

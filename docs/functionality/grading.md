@@ -133,7 +133,7 @@ flowchart TD
 | **Boundary behavior (maps UP)** | All comparisons use `>=`, so exact boundaries map to the **higher** grade: exactly `90 → A+`, exactly `80 → A`, …, exactly `50 → D` [Readme.md:L196-L204]. A value just under a threshold (e.g. `49.99`) falls to the band below. |
 | **No clamping** | Marks are unvalidated and uncapped, so `percentage` is **not** constrained to `[0, 100]`. A `percentage > 100` still yields `A+` and a negative `percentage` still yields `F` [Readme.md:L194-L206]. The full no-input-validation invariant is owned by [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
 | **Side effects** | None beyond the single DOM write at `#grade` [Readme.md:L212]; grade assignment performs no I/O, network, or persistence. |
-| **Error modes** | None internal to grade assignment — the cascade contains no operations that can throw, so any `percentage` resolves to a grade [Readme.md:L194-L206]. Upstream, the `\|\| 0` no-NaN guard ensures `percentage` is always numeric (see [`../reference/data-schema.md`](../reference/data-schema.md)). |
+| **Error modes** | None internal to grade assignment — the cascade contains no operations that can throw, so any `percentage` resolves to a grade [Readme.md:L194-L206]. Upstream, the `\|\| 0` no-NaN guard defaults blank/falsy mark fields to `0` before parsing, so the `percentage` fed into the cascade is computed from numeric marks (see [`../reference/data-schema.md`](../reference/data-schema.md)). |
 
 **Worked examples** (illustrating boundary and default behavior):
 

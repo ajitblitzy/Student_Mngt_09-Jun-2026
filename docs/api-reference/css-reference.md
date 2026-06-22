@@ -36,13 +36,11 @@ The stylesheet contains **exactly eleven** rule-blocks, listed below in source o
 
 The stylesheet uses three literal colors for its surfaces and actions (the table-border and report-card greys are documented in the reference table above):
 
-```css
-background: #f4f6f8; /* page background (L94) */
-background: #007bff; /* button (L125) */
-background: #0056b3; /* button:hover (L133) */
-```
-
-Citations: [Readme.md:L94], [Readme.md:L125], [Readme.md:L133].
+| Color | Hex | Used by | Source |
+|---|---|---|---|
+| Page background | `#f4f6f8` | `body` | [Readme.md:L94] |
+| Action button | `#007bff` | `button` | [Readme.md:L125] |
+| Button hover | `#0056b3` | `button:hover` | [Readme.md:L133] |
 
 ---
 
@@ -60,9 +58,18 @@ The README markets the project as having a **"Responsive UI"** [Readme.md:L253].
 
 ---
 
-## Expected Presentation
+## Expected Behavior / Contract
 
-This `css-reference` is a **style contract** rather than a behavioral one. With this stylesheet applied, the app renders as a centered white card (≤ 800px wide) on a light-grey (`#f4f6f8`) background, presenting a vertically stacked form of padded, 16px inputs, blue (`#007bff`) action buttons that darken to `#0056b3` on hover, and — within the rendered DOM report card — a full-width, center-aligned marks table with single 1px `#ccc` borders beneath a top-bordered (`#ddd`) report-card section [Readme.md:L92-L154]. This styling is **static and purely presentational**: it has no effect on the computation or PDF-export logic, which are documented separately.
+This `css-reference` describes a **style contract** rather than a behavioral one: it specifies what the stylesheet is expected to present, not runtime logic. The contract below captures the precondition (input), the expected presentation (output), side effects, invariants, and failure behavior.
+
+| Aspect | Expectation |
+|---|---|
+| **Precondition (input)** | The stylesheet is linked from the markup via `<link rel="stylesheet" href="style.css">` [Readme.md:L35] and loads successfully; the eleven rule-blocks [Readme.md:L91-L155] then apply to the page. |
+| **Expected presentation (output)** | With the stylesheet applied, the app renders as a centered white card (≤ 800px wide) on a light-grey (`#f4f6f8`) background, presenting a vertically stacked form of padded, 16px inputs, blue (`#007bff`) action buttons that darken to `#0056b3` on hover, and — within the rendered DOM report card — a full-width, center-aligned marks table with single 1px `#ccc` borders beneath a top-bordered (`#ddd`) report-card section [Readme.md:L92-L154]. |
+| **Side effects** | None. CSS is purely declarative; it paints the DOM and never reads, computes, or persists state, and it runs no JavaScript. |
+| **Invariants** | Presentation is **static and deterministic** — the same markup always renders the same way. The JavaScript never adds or removes classes or inline styles, so styling does not change at runtime; the only runtime DOM mutation is *content* (via `.innerHTML` / `.innerText`), never *style* [Readme.md:L161-L238]. Responsiveness is provided solely by the viewport `<meta>` tag [Readme.md:L32] plus the fluid `max-width: 800px` container [Readme.md:L100]; there are **no `@media` breakpoints** [Readme.md:L91-L155]. |
+| **Error modes / failure behavior** | If the stylesheet is absent or fails to load, the page falls back to unstyled browser defaults but remains **fully functional** — data entry, computation, grading, rendering, and PDF export are independent of styling and run identically with or without it. |
+| **Presentation independence** | This styling has **no effect** on the computation or PDF-export logic, which are documented separately. |
 
 ---
 
