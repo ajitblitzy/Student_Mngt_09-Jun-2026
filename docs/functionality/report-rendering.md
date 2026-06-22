@@ -6,7 +6,7 @@ This guide documents feature **F-006 (On-Screen Rendering)** of the Presentation
 `generateReport()` writes its computed results into the on-screen **report-card** DOM region,
 including the **rebuild-from-scratch** marks table that is cleared and repopulated on every run.
 Like every page in this documentation set, it is code-grounded — every technical claim carries an
-inline `[Readme.md:Lx-Ly]` citation back to the application source embedded in the
+inline citation back to the application source embedded in the
 repository-root `Readme.md`.
 
 ---

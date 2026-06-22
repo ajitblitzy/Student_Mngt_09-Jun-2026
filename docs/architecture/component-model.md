@@ -9,7 +9,7 @@ single-page, client-only utility composed of three logical components — **pres
 library loaded from a CDN [Readme.md:L42-L253].
 
 All content on this page is **code-grounded**: every technical claim carries an inline
-`[Readme.md:Lx-Ly]` citation back to the application source, which is embedded inside the
+citation back to the application source, which is embedded inside the
 repository-root `Readme.md`. This page describes *what each component is and how the components
 connect at runtime*; it deliberately does **not** restate the full element tables, selector
 tables, or function contracts owned by the API-reference and dependency documents — it **links**
@@ -115,10 +115,10 @@ flowchart TD
     JS -->|"destructure window.jspdf (L231)"| JSPDF
 ```
 
-*Diagram validated against the source load and access lines [Readme.md:L50, L53, L96, L178-L227, L231].*
+*Diagram validated against the source load and access lines [Readme.md:L50] [Readme.md:L53] [Readme.md:L96] [Readme.md:L178-L227] [Readme.md:L231].*
 
 The three load relationships are declared verbatim in the markup — the stylesheet link, the jsPDF
-CDN script, and the trailing `script.js` include [Readme.md:L50, L53, L96]:
+CDN script, and the trailing `script.js` include [Readme.md:L50] [Readme.md:L53] [Readme.md:L96]:
 
 ```html
 <link rel="stylesheet" href="style.css">

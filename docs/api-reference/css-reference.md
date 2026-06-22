@@ -39,9 +39,9 @@ The stylesheet contains **exactly eleven** rule-blocks, listed below in source o
 | `th, td` | `padding: 10px; text-align: center` | Padded, center-aligned table header and data cells [Readme.md:L166-L169] |
 
 > **Note — single (non-doubled) cell borders:** `border-collapse: collapse` on `table` [Readme.md:L158] combined with `table, th, td { border: 1px solid #ccc; }` [Readme.md:L162-L164] merges adjacent cell edges into a single 1px line instead of the default doubled borders.
-
+>
 > **Note — grouped selectors are distinct rules:** `table, th, td` [Readme.md:L162-L164] and `th, td` [Readme.md:L166-L169] are two separate rule-blocks; both are counted among the eleven.
-
+>
 > **Accessibility note — touch-target heights.** The `input` rule (`padding: 10px; font-size: 16px`)
 > [Readme.md:L133-L136] and the `button` rule (`padding: 12px`) [Readme.md:L138-L145] render controls
 > ≈ 42 px and ≈ 39 px tall respectively — below the common 44 px minimum touch-target guideline

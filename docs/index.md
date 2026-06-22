@@ -8,7 +8,7 @@ of contents** for everything under the `docs/` tree.
 
 All content across this documentation set is extracted directly from the application source,
 which is embedded in the repository-root `Readme.md`. Every technical claim therefore carries
-an inline citation of the form `[Readme.md:Lx-Ly]` pointing back to the exact source lines, so
+an inline citation pointing back to the exact source lines, so
 the documentation stays traceable to — and verifiable against — the code.
 
 The application itself is a **zero-install, browser-only static front-end**: it is built from
@@ -42,12 +42,12 @@ feature to the layer it belongs to and the primary document that covers it.
 
 | Layer | Feature ID | Feature | Primary Doc |
 |---|---|---|---|
-| Data Entry | F-001 | Identity Capture (name, roll) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L61-L62, L177-L179] |
-| Data Entry | F-002 | Marks Entry (5 subjects) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L64-L68, L181-L187] |
+| Data Entry | F-001 | Identity Capture (name, roll) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L61-L62] [Readme.md:L177-L179] |
+| Data Entry | F-002 | Marks Entry (5 subjects) | [functionality/data-entry.md](functionality/data-entry.md) — [Readme.md:L64-L68] [Readme.md:L181-L187] |
 | Computation | F-003 | Total Aggregation | [functionality/computation.md](functionality/computation.md) — [Readme.md:L189-L205] |
-| Computation | F-004 | Percentage | [functionality/computation.md](functionality/computation.md) — [Readme.md:L207, L226] |
+| Computation | F-004 | Percentage | [functionality/computation.md](functionality/computation.md) — [Readme.md:L207] [Readme.md:L226] |
 | Computation | F-005 | Grade Assignment | [functionality/grading.md](functionality/grading.md) — [Readme.md:L209-L221] |
-| Presentation | F-006 | On-Screen Report Render | [functionality/report-rendering.md](functionality/report-rendering.md) — [Readme.md:L74-L93, L191-L227] |
+| Presentation | F-006 | On-Screen Report Render | [functionality/report-rendering.md](functionality/report-rendering.md) — [Readme.md:L74-L93] [Readme.md:L191-L227] |
 | Export | F-007 | PDF Export | [functionality/pdf-export.md](functionality/pdf-export.md) — [Readme.md:L230-L252] |
 | Presentation | F-008 | Static Visual Styling | [functionality/styling.md](functionality/styling.md) — [Readme.md:L106-L170] |
 

@@ -7,7 +7,7 @@ function exports the **rendered report card** as a PDF file using the jsPDF libr
 reads its values from the **rendered DOM** — the populated report-card spans, **not** the form
 inputs — and writes a fixed-layout, single-page document that the browser downloads
 [Readme.md:L230-L252]. All content on this page is code-grounded in the application source embedded
-in the repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]`
+in the repository-root `Readme.md`, and every technical claim carries an inline
 citation.
 
 ## Source Location

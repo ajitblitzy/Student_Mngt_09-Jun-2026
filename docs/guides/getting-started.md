@@ -53,8 +53,8 @@ the embedded README [Readme.md:L277-L283]:
    marks — Maths, Science, English, History, and Computer — using the form inputs. For more on
    these inputs, see [`../functionality/data-entry.md`](../functionality/data-entry.md).
 4. **Click "Generate Report".** This computes the total, percentage, and grade and renders the
-   on-screen **report card** [Readme.md:L70, L223-L227].
-5. **Click "Download PDF".** This saves the report as `<name>_Report.pdf` [Readme.md:L71, L251].
+   on-screen **report card** [Readme.md:L70] [Readme.md:L223-L227].
+5. **Click "Download PDF".** This saves the report as `<name>_Report.pdf` [Readme.md:L71] [Readme.md:L251].
 
 **Note on embedded source files.** The project tree advertises `index.html`, `style.css`, and
 `script.js` as standalone files [Readme.md:L29-L36], but in this repository the markup, styles, and
@@ -74,7 +74,7 @@ When the app is working correctly, you will observe the following:
 
 - **After Generate Report**, the on-screen **report card** populates with the student name, the roll
   number, a marks table with one row per subject, the total marks, the percentage (shown to two
-  decimals), and a letter grade [Readme.md:L74-L93, L223-L227].
+  decimals), and a letter grade [Readme.md:L74-L93] [Readme.md:L223-L227].
 - **After Download PDF**, the browser downloads a PDF file named `<name>_Report.pdf` — for example, a
   student named `Asha` produces `Asha_Report.pdf` [Readme.md:L251].
 
@@ -82,7 +82,7 @@ At a glance:
 
 | Action | Expected Result | Source |
 |---|---|---|
-| Click **Generate Report** | The report card renders the name, roll number, per-subject marks table, total, percentage (two decimals), and grade. | [Readme.md:L74-L93, L223-L227] |
+| Click **Generate Report** | The report card renders the name, roll number, per-subject marks table, total, percentage (two decimals), and grade. | [Readme.md:L74-L93] [Readme.md:L223-L227] |
 | Click **Download PDF** | The browser saves the report as `<name>_Report.pdf` (e.g., `Asha_Report.pdf`). | [Readme.md:L251] |
 
 ---

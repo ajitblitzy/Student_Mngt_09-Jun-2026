@@ -8,7 +8,7 @@ on-screen report card, and exports it as a PDF. It is the architectural entry po
 documentation set: it frames the system at a glance and then hands off to the deeper
 [component model](component-model.md) and [data-flow](data-flow.md) documents for detail. All
 content on this page is **code-grounded** in the application source embedded in the
-repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]`
+repository-root `Readme.md`, and every technical claim carries an inline
 citation.
 
 **Source Location:** [Readme.md:L1-L36] — the project Overview and Project Structure tree. The
@@ -121,7 +121,7 @@ flowchart LR
     PDF -->|"downloaded"| User
 ```
 
-*Diagram #1 — High-level architecture; validated against [Readme.md:L50, L53, L96, L231, L251].*
+*Diagram #1 — High-level architecture; validated against [Readme.md:L50] [Readme.md:L53] [Readme.md:L96] [Readme.md:L231] [Readme.md:L251].*
 
 For the three logical components and the jsPDF dependency in detail, see
 [`component-model.md`](component-model.md); for the end-to-end, DOM-mediated data flow and the

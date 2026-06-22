@@ -292,4 +292,3 @@ flowchart TD
 - [Dependencies](../dependencies.md) — jsPDF 2.5.1 CDN integration and the availability
   precondition.
 - [Documentation Hub](../index.md) — back to the master table of contents.
-

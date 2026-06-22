@@ -7,7 +7,7 @@ generating the on-screen report card, and exporting it as a PDF. It states the o
 workflow-ordering rule (**Generate Report before Download PDF**) and provides a troubleshooting
 section for the most common surprises. All content on this page is code-grounded in the application
 source embedded in the repository-root `Readme.md`, and every technical claim carries an inline
-`[Readme.md:Lx-Ly]` citation.
+citation.
 
 If this is your first time running the app, start with [`getting-started.md`](getting-started.md)
 for the prerequisites and zero-install run steps, then return here for the walkthrough.
@@ -91,7 +91,7 @@ defect to fix in code.
 | Symptom | Cause | Fix |
 |---|---|---|
 | **PDF is blank, or shows old data.** | You didn't click **Generate Report** first, or you edited the form after generating and didn't regenerate. `downloadPDF()` reads the **rendered DOM**, not the **form inputs** [Readme.md:L235-L239] (the **DOM-read invariant**). | Click **Generate Report**, then **Download PDF**; regenerate after any edit. See [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
-| **Download does nothing; the browser console shows a `TypeError`.** | The jsPDF CDN script failed to load (offline, firewall, or CDN outage), so `window.jspdf` is `undefined` and the line `const { jsPDF } = window.jspdf;` throws [Readme.md:L53, L231]. The function has no `try`/`catch` and no programmatic error handling [Readme.md:L230-L252], so the error surfaces only in the console — there is no in-app message. | Ensure internet access and reload the page so the CDN script resolves. See [`../dependencies.md`](../dependencies.md). |
+| **Download does nothing; the browser console shows a `TypeError`.** | The jsPDF CDN script failed to load (offline, firewall, or CDN outage), so `window.jspdf` is `undefined` and the line `const { jsPDF } = window.jspdf;` throws [Readme.md:L53] [Readme.md:L231]. The function has no `try`/`catch` and no programmatic error handling [Readme.md:L230-L252], so the error surfaces only in the console — there is no in-app message. | Ensure internet access and reload the page so the CDN script resolves. See [`../dependencies.md`](../dependencies.md). |
 | **A subject's marks are treated as `0`.** | A blank/falsy mark field defaults to `0` via the **no-NaN guard** applied to each subject's `.value` (verbatim form shown below the table) — a blank `.value` is the empty string (falsy), so it becomes `0` *before* `parseInt` runs, contributing `0` rather than `NaN` [Readme.md:L182-L186]. The browser's `<input type="number">` control typically clears non-numeric typing to an empty `.value`, which the guard then treats as `0`; the JavaScript itself does **not** validate arbitrary non-empty invalid strings. | Enter a numeric value for every subject you intend to count. See [`../functionality/data-entry.md`](../functionality/data-entry.md). |
 | **The percentage seems low.** | The denominator is fixed at **500** (five subjects × 100), so any subject left blank counts as `0` and lowers the result: `(total / 500) * 100` [Readme.md:L207]. | Fill all five subjects, or read the score as always being out of 500. See [`../reference/data-schema.md`](../reference/data-schema.md). |
 

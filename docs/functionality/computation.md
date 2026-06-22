@@ -81,14 +81,14 @@ document.getElementById('percentage').innerText = percentage.toFixed(2);
   reference — see [`../reference/data-schema.md`](../reference/data-schema.md) for the authoritative
   value and its `5 subjects × 100` rationale; this page links to it rather than restating it.
 - **Number-vs-string nuance (important):** `total` and the internal `percentage` are full-precision
-  JavaScript **numbers** [Readme.md:L189, L207]. Only the *displayed* `#percentage` value is a
+  JavaScript **numbers** [Readme.md:L189] [Readme.md:L207]. Only the *displayed* `#percentage` value is a
   2-decimal **string** produced by `.toFixed(2)` [Readme.md:L226]. The stored values are **not**
   rounded.
 
 > **Note — `#totalMarks` is displayed unformatted.** The total is written straight to the DOM with
 > `document.getElementById('totalMarks').innerText = total;` [Readme.md:L225] — no `.toFixed()` and no
 > formatting. Only the percentage is formatted to two decimals [Readme.md:L226].
-
+>
 > **Note — the `%` sign is static markup.** The literal percent sign shown after the value comes from
 > the HTML (`<span id="percentage"></span>%` [Readme.md:L91]), not from `generateReport()`. The
 > JavaScript writes only the numeric 2-decimal string into the `#percentage` span.
