@@ -21,7 +21,7 @@ denominator, and the grade thresholds) are owned by
 summarizes them but does not re-assert them as authoritative.
 
 All content below is **code-grounded**: every technical claim carries an inline
-`[Readme.md:Lx-Ly]` citation back to the application source, which is embedded in the
+`Readme.md` line-range citation back to the application source, which is embedded in the
 repository-root `Readme.md`. Code excerpts are short, verbatim quotations of the cited lines.
 
 ## Source Location

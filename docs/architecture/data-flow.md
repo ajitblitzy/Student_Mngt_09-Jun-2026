@@ -9,7 +9,7 @@ report-card DOM**, and finally into the exported PDF. It documents the applicati
 public functions, `generateReport()` and `downloadPDF()`.
 
 All content on this page is **code-grounded** in the application source embedded in the
-repository-root `Readme.md`; every technical claim carries an inline `[Readme.md:Lx-Ly]`
+repository-root `Readme.md`; every technical claim carries an inline `Readme.md` line-range
 citation. This page is the **authoritative home** of the application's two function
 flowcharts — Mermaid diagram **#3** (`generateReport()`) and Mermaid diagram **#4**
 (`downloadPDF()`) — which sibling documents mirror for consistency.

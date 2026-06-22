@@ -8,7 +8,7 @@ and derives the `percentage` out of a fixed 500-point denominator (feature **F-0
 Both steps execute inside `generateReport()` and run on every report generation.
 
 All content on this page is code-grounded — it is extracted from the `script.js` block embedded in
-the repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]`
+the repository-root `Readme.md`, and every technical claim carries an inline `Readme.md` line-range
 citation.
 
 ---
@@ -20,6 +20,12 @@ citation.
 
 The computation reads the `subjects` object built earlier in `generateReport()` [Readme.md:L166-L172]
 and writes its results to the rendered DOM at the end of the same function [Readme.md:L210-L211].
+
+---
+
+## How It Works
+
+Both computation steps run inside `generateReport()`, in sequence, on every report generation, operating on the `subjects` object built earlier in the same function under the `parseInt(... .value || 0)` no-NaN guard [Readme.md:L166-L172]. First, **F-003 (Total Aggregation)** initializes a `total` accumulator to `0` [Readme.md:L174] and sums the five subject values in a `for...in` loop over `subjects` [Readme.md:L179-L190]. Then **F-004 (Percentage)** derives `percentage = (total / 500) * 100` from that total over the fixed 500-point denominator [Readme.md:L192]. Finally the results are written to the rendered DOM: `total` is shown **unformatted** [Readme.md:L210] while `percentage` is displayed with two-decimal precision via `.toFixed(2)` [Readme.md:L211]. The two steps are detailed below.
 
 ---
 

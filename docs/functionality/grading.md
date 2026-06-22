@@ -6,7 +6,7 @@ This guide documents feature **F-005 (Grade Assignment)** of the Computation lay
 computed `percentage` is mapped to exactly one letter grade by an ordered `if / else-if`
 threshold cascade that defaults to the **default grade `'F'`** [Readme.md:L194-L206]. Like
 every page in this documentation set, it is code-grounded — every technical claim carries an
-inline `[Readme.md:Lx-Ly]` citation back to the application source embedded in the
+inline `Readme.md` line-range citation back to the application source embedded in the
 repository-root `Readme.md`.
 
 ---
@@ -20,6 +20,12 @@ repository-root `Readme.md`.
 The grade-assignment logic lives entirely inside `generateReport()`, immediately after the
 `percentage` is computed [Readme.md:L192] and immediately before the results are written to the
 rendered DOM [Readme.md:L208-L212].
+
+---
+
+## How It Works
+
+Grade assignment (**F-005**) runs inside `generateReport()` immediately after `percentage` is computed [Readme.md:L192] and just before the results are written to the rendered DOM [Readme.md:L208-L212]. It works in two steps: (1) `grade` is initialized to the **default `'F'`** [Readme.md:L194]; (2) an ordered `if / else-if` cascade tests `percentage` against six descending thresholds (`>= 90 / 80 / 70 / 60 / 50`) and reassigns `grade` at the **first** matching branch [Readme.md:L196-L206]. Because it is a single `if / else-if` ladder, evaluation stops at the first satisfied condition, so every `percentage` selects exactly one grade and any value below `50` retains the default `'F'`. The resulting grade is written to the `#grade` placeholder [Readme.md:L212]. The cascade, its implicit upper bounds, the threshold rubric, and the decision flowchart are detailed below.
 
 ---
 

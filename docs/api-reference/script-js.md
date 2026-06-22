@@ -18,7 +18,7 @@ the jsPDF library). This page gives each function's exact signature, the element
 writes, its side effects, its error behavior, a flow diagram, and an explicit
 **Expected Behavior / Contract**.
 
-All content is **code-grounded**: every technical claim carries an inline `[Readme.md:Lx-Ly]`
+All content is **code-grounded**: every technical claim carries an inline `Readme.md` line-range
 citation back to the application source, which is embedded in the repository-root `Readme.md`.
 Code excerpts are short, verbatim quotations of the cited lines. The standalone `script.js`
 implied by the README's project tree does not physically exist as a separate file; `Readme.md`
@@ -38,6 +38,17 @@ is the sole source.
 - `generateReport()` — [Readme.md:L162-L213]
 - `downloadPDF()` — [Readme.md:L215-L237]
 - jsPDF CDN `<script>` (the dependency `downloadPDF()` relies on) — [Readme.md:L38]
+
+---
+
+## How It Works
+
+The module exposes **two parameterless, side-effecting global functions**, each wired to a page action button by an inline `onclick` attribute [Readme.md:L55-L56]:
+
+1. **`generateReport()`** runs on **Generate Report**. It reads the seven **form inputs** by element ID [Readme.md:L163-L172], builds a five-subject object using the `parseInt(... .value || 0)` no-NaN guard [Readme.md:L166-L172], rebuilds the marks table from scratch, computes `total`, `percentage = (total / 500) * 100`, and a letter `grade`, then writes the results into the **rendered report-card DOM** [Readme.md:L174-L212].
+2. **`downloadPDF()`** runs on **Download PDF**. It destructures the `jsPDF` constructor from the `window.jspdf` global [Readme.md:L216], reads the already-**rendered** report-card values — the **DOM-read invariant**, not the form inputs [Readme.md:L220-L224] — lays them out, and saves a file named `` `${name}_Report.pdf` `` [Readme.md:L236].
+
+Both functions take no arguments and return `undefined`; all of their work is performed through DOM reads/writes (and, for `downloadPDF()`, the jsPDF library). Each function's exact signature, the elements it reads and writes, its side effects, its error behavior, and a flow diagram are detailed below.
 
 ---
 

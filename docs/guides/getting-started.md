@@ -6,7 +6,7 @@ This guide gets a new user running the **Student Report Generator** with **zero 
 The application is a browser-only static front-end — plain HTML, CSS, and vanilla JavaScript — so
 there is nothing to install, build, or deploy: you simply open a page in a web browser and use it.
 All content on this page is code-grounded in the repository-root `Readme.md`, with an inline
-`[Readme.md:Lx-Ly]` citation on every code-derived claim.
+`Readme.md` line-range citation on every code-derived claim.
 
 For the day-to-day usage walkthrough, the critical workflow-ordering rule, and troubleshooting, see
 [`usage.md`](usage.md). For the jsPDF CDN dependency details, see

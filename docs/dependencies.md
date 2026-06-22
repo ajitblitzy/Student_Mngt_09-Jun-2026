@@ -12,7 +12,7 @@ browser by a single `<script>` tag.
 
 All content on this page is code-grounded: it is extracted from the application source embedded
 in the repository-root `Readme.md`, and every technical claim carries an inline
-`[Readme.md:Lx-Ly]` citation.
+`Readme.md` line-range citation.
 
 ## Source Location
 

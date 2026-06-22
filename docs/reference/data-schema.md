@@ -14,7 +14,7 @@ prevent drift, consumer documents — notably
 [`../functionality/grading.md`](../functionality/grading.md) — **link to this page rather than
 duplicating its values** (AAP 0.5.5).
 
-All content below is code-grounded: every value carries an inline `[Readme.md:Lx-Ly]`
+All content below is code-grounded: every value carries an inline `Readme.md` line-range
 citation back to the application source, which is embedded in the repository-root `Readme.md`.
 
 ## Source Location

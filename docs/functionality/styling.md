@@ -4,7 +4,7 @@ Feature **F-008 Static Visual Styling** — Presentation layer.
 
 ## Purpose
 
-This guide documents the **static visual styling** of the Student Report Generator — the layout, color palette, and table styling defined in the application's stylesheet `style.css` [Readme.md:L91-L155]. It is the prose companion to the full selector reference at [`../api-reference/css-reference.md`](../api-reference/css-reference.md): that page catalogs *what* each rule declares, while this guide explains *how* the styling is organized by concern and *what behavior is expected* from it. All content is code-grounded in the repository-root `Readme.md`, and every claim carries an inline `[Readme.md:Lx-Ly]` citation.
+This guide documents the **static visual styling** of the Student Report Generator — the layout, color palette, and table styling defined in the application's stylesheet `style.css` [Readme.md:L91-L155]. It is the prose companion to the full selector reference at [`../api-reference/css-reference.md`](../api-reference/css-reference.md): that page catalogs *what* each rule declares, while this guide explains *how* the styling is organized by concern and *what behavior is expected* from it. All content is code-grounded in the repository-root `Readme.md`, and every claim carries an inline `Readme.md` line-range citation.
 
 ---
 
@@ -13,6 +13,12 @@ This guide documents the **static visual styling** of the Student Report Generat
 - **Stylesheet:** the embedded `style.css` block [Readme.md:L91-L155], which contains exactly eleven rule-blocks.
 - **Stylesheet link:** the markup loads it via `<link rel="stylesheet" href="style.css">` [Readme.md:L35].
 - **Viewport meta:** the application's only responsiveness directive lives in the markup `<head>` [Readme.md:L32].
+
+---
+
+## How It Works
+
+The presentation layer (**F-008**) is **static, declarative CSS** that paints the single-page app and contributes **no behavior**. The browser loads the stylesheet via the markup `<link>` [Readme.md:L35] and applies its eleven rule-blocks [Readme.md:L91-L155]; the JavaScript never adds or removes classes or inline styles, so the styling does not change at runtime — the only runtime DOM mutation is *content* (via `.innerHTML` / `.innerText`), never *style* [Readme.md:L161-L238]. The rules organize into three concerns: **layout** — the light-grey `body`, the centered white `.container` capped at `max-width: 800px`, the grid-based `.form-section`, centered headings, and padded `input`s [Readme.md:L92-L121]; the **color palette** — blue action buttons that darken on hover, over light-grey surfaces [Readme.md:L123-L134]; and **table styling** — the full-width, collapsed-border marks table with single 1px `#ccc` cell borders beneath a top-bordered `.report-card` [Readme.md:L136-L154]. Each concern is detailed below.
 
 ---
 

@@ -4,9 +4,19 @@
 
 This page is the selector and style-declaration reference for the Student Report Generator's presentation layer — feature **F-008, static visual styling**. It catalogs every rule in the application's stylesheet so that each visual decision (layout, color palette, typography, and table borders) is traceable to the exact source line it comes from. It is the precise companion to the prose feature guide at [`../functionality/styling.md`](../functionality/styling.md): that guide explains *why* the styling looks the way it does, while this reference documents *what* each rule declares.
 
-All content on this page is code-grounded — it is extracted from the `style.css` block embedded in the repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]` citation.
+All content on this page is code-grounded — it is extracted from the `style.css` block embedded in the repository-root `Readme.md`, and every technical claim carries an inline `Readme.md` line-range citation.
 
-**Source:** [Readme.md:L91-L155]
+## Source Location
+
+- **Stylesheet (`style.css`):** [Readme.md:L91-L155] — the embedded `style.css` fenced code block, which contains exactly eleven rule-blocks.
+- **Stylesheet link (markup):** the page loads the stylesheet via `<link rel="stylesheet" href="style.css">` [Readme.md:L35].
+- **Viewport meta (only responsiveness directive):** the markup `<head>` declares `<meta name="viewport" ...>` [Readme.md:L32].
+
+---
+
+## How It Works
+
+The presentation layer is **purely declarative CSS** — the eleven rule-blocks in `style.css` paint the page and contribute **no behavior** [Readme.md:L91-L155]. The browser applies them once the stylesheet is linked from the markup [Readme.md:L35]; the JavaScript never adds or removes classes or inline styles, so the styling is **static at runtime** — the only runtime DOM mutation is *content* (via `.innerHTML` / `.innerText`), never *style* [Readme.md:L161-L238]. The rules group into three concerns: **layout** (`body`, `.container`, `.form-section`, `h1, h2`, `input` [Readme.md:L92-L121]), the **color palette** (blue action buttons over light-grey surfaces [Readme.md:L123-L134]), and **table styling** (`.report-card`, `table`, `table, th, td`, `th, td` [Readme.md:L136-L154]). The selector-by-selector catalog below documents *what* each of the eleven rules declares.
 
 ---
 
