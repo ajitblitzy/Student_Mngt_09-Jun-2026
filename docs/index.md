@@ -12,9 +12,9 @@ an inline citation of the form `[Readme.md:Lx-Ly]` pointing back to the exact so
 the documentation stays traceable to — and verifiable against — the code.
 
 The application itself is a **zero-install, browser-only static front-end**: it is built from
-plain HTML, CSS, and vanilla JavaScript, with a single third-party library — **jsPDF** — loaded
-from a CDN [Readme.md:L270-L275]. There is no backend, no database, no build step, and nothing
-to install; the app runs entirely in the browser by opening `index.html`.
+plain HTML, CSS, and vanilla JavaScript, with a single third-party library — **jsPDF**
+[Readme.md:L270-L275] — loaded from a CDN [Readme.md:L53]. There is no backend, no database, no
+build step, and nothing to install; the app runs entirely in the browser by opening `index.html`.
 
 This hub is organized to satisfy two governing goals derived from the project requirement —
 *"generate document based on the code, ensure the functionalities are clearly separated, and
@@ -139,10 +139,10 @@ Contract** block.
 
 ## Reading Guide & Navigation Model
 
-**Hub-and-spoke navigation.** This page is the hub. The repository-root `Readme.md` is *planned to*
-link here through a `## Documentation` section in the final checkpoint; today, every document in the
-`docs/` tree already links **back to this hub** from its own *Related Documents* section. Start here,
-follow a spoke to the topic you need, and use the back-link to return.
+**Hub-and-spoke navigation.** This page is the hub. The repository-root `Readme.md` links here
+through its `## Documentation` section [Readme.md:L12-L23], and every document in the `docs/` tree
+links **back to this hub** from its own *Related Documents* section. Start here, follow a spoke to
+the topic you need, and use the back-link to return.
 
 **Single source of truth (no duplication, no drift).** Two documents are authoritative and are
 deliberately **not** restated elsewhere:

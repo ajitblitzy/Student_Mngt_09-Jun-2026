@@ -71,6 +71,21 @@ The README markets the project as having a **"Responsive UI"** [Readme.md:L268].
 
 ---
 
+## Accessibility and Touch-Target Limitations
+
+The presentation layer is functional and keyboard-operable, but the embedded markup and stylesheet carry two known **accessibility / UI-quality limitations**. They are recorded here as characteristics of the current code; because this is a documentation-only change set, the source is **not modified** to change them — source-code changes (including the embedded `index.html` and `style.css`) are out of scope per AAP 0.8.2.
+
+| Limitation | Detail | Source |
+|---|---|---|
+| **No explicit `<label>` elements** | The seven form fields are named only by their `placeholder` attribute (e.g. `placeholder="Student Name"`); the markup defines **no `<label>` elements** and **no `aria-label`** attributes, so a field's placeholder is its only accessible name. Placeholder text is not a substitute for a persistent label and disappears once the field has a value. | [Readme.md:L61-L68] |
+| **Touch targets below 44 px** | Control heights fall below the common 44 px minimum touch-target guideline. The `input` rule sets `padding: 10px; font-size: 16px;`, so inputs render ≈ **42 px** tall [Readme.md:L133-L136]; the `button` rule sets `padding: 12px;`, so buttons render ≈ **39 px** tall [Readme.md:L138-L145]. The control **widths** are ample (the fields stretch to the full grid column), so the shortfall is vertical only. | [Readme.md:L133-L145] |
+
+**What does work.** The controls are standard, focusable elements: every input and button is in the natural keyboard tab order (`tabindex` `0`) and shows the browser's default focus outline, and the `button:hover` rule [Readme.md:L147-L149] provides a hover affordance. The limitations above concern accessible *naming* and *vertical touch-target sizing* only — not focusability or operability.
+
+**Why this is documented rather than fixed.** Adding `<label for="…">` / `aria-label` attributes or increasing the control heights would require editing the embedded `index.html` / `style.css`, which is a **source-code change** and is therefore out of scope for this documentation-only task (AAP 0.8.2). The remedy, should a future code task lift that restriction, is straightforward: add one `<label for="…">` per input (or an `aria-label`) and raise the input/button `min-height` (or vertical padding) to at least 44 px.
+
+---
+
 ## Expected Behavior / Contract
 
 The "expectation from the code" for F-008 is that styling is **entirely static and presentational** — it describes appearance and never participates in logic.

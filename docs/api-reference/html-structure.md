@@ -67,6 +67,14 @@ fields [Readme.md:L64-L68].
 | `<input>` | `history` | number — History marks | read by `generateReport()` [Readme.md:L185] |
 | `<input>` | `computer` | number — Computer marks | read by `generateReport()` [Readme.md:L186] |
 
+> **Accessibility note — placeholder-only inputs (no `<label>`).** Each input is named only by its
+> `placeholder` attribute; the markup defines **no `<label>` elements** and no `aria-label`
+> attributes [Readme.md:L61-L68]. The fields remain keyboard-focusable, but a placeholder is not a
+> persistent accessible name. This is a known UI-quality limitation, documented in full (alongside
+> the touch-target sizing note) in
+> [`../functionality/styling.md`](../functionality/styling.md#accessibility-and-touch-target-limitations);
+> per the documentation-only scope, the source markup is **not** modified (AAP 0.8.2).
+
 ### Action Buttons
 
 The two `<button>` elements have **no `id`**; each is wired to a global function via an inline

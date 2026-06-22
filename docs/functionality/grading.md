@@ -25,7 +25,7 @@ rendered DOM [Readme.md:L223-L227].
 
 ## How It Works
 
-Grade assignment (**F-005**) runs inside `generateReport()` immediately after `percentage` is computed [Readme.md:L207] and just before the results are written to the rendered DOM [Readme.md:L223-L227]. It works in two steps: (1) `grade` is initialized to the **default `'F'`** [Readme.md:L209]; (2) an ordered `if / else-if` cascade tests `percentage` against six descending thresholds (`>= 90 / 80 / 70 / 60 / 50`) and reassigns `grade` at the **first** matching branch [Readme.md:L211-L221]. Because it is a single `if / else-if` ladder, evaluation stops at the first satisfied condition, so every `percentage` selects exactly one grade and any value below `50` retains the default `'F'`. The resulting grade is written to the `#grade` placeholder [Readme.md:L227]. The cascade, its implicit upper bounds, the threshold rubric, and the decision flowchart are detailed below.
+Grade assignment (**F-005**) runs inside `generateReport()` immediately after `percentage` is computed [Readme.md:L207] and just before the results are written to the rendered DOM [Readme.md:L223-L227]. It works in two steps: (1) `grade` is initialized to the **default `'F'`** [Readme.md:L209]; (2) an ordered `if / else-if` cascade tests `percentage` against five descending threshold comparisons (`>= 90 / 80 / 70 / 60 / 50`) and reassigns `grade` at the **first** matching branch [Readme.md:L211-L221]. These five comparisons, together with the **default `'F'`** branch from step (1), yield the six grade bands (`A+`, `A`, `B`, `C`, `D`, `F`). Because it is a single `if / else-if` ladder, evaluation stops at the first satisfied condition, so every `percentage` selects exactly one grade and any value below `50` retains the default `'F'`. The resulting grade is written to the `#grade` placeholder [Readme.md:L227]. The cascade, its implicit upper bounds, the threshold rubric, and the decision flowchart are detailed below.
 
 ---
 
@@ -33,8 +33,8 @@ Grade assignment (**F-005**) runs inside `generateReport()` immediately after `p
 
 Grade assignment is **deterministic** and runs in two steps. First, `grade` is initialized to
 the **default grade `'F'`** [Readme.md:L209]. Second, an ordered `if / else-if` cascade tests
-`percentage` against six descending thresholds and reassigns `grade` for the **first** matching
-branch [Readme.md:L211-L221]. Because the chain is a single `if / else-if` ladder, evaluation
+`percentage` against five descending threshold comparisons and reassigns `grade` for the **first** matching
+branch [Readme.md:L211-L221]; these five comparisons plus the **default `'F'`** branch together define the six grade bands (`A+`, `A`, `B`, `C`, `D`, `F`). Because the chain is a single `if / else-if` ladder, evaluation
 stops at the first satisfied condition, so each `percentage` selects exactly one branch.
 
 ```javascript

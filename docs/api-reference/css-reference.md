@@ -42,6 +42,13 @@ The stylesheet contains **exactly eleven** rule-blocks, listed below in source o
 
 > **Note — grouped selectors are distinct rules:** `table, th, td` [Readme.md:L162-L164] and `th, td` [Readme.md:L166-L169] are two separate rule-blocks; both are counted among the eleven.
 
+> **Accessibility note — touch-target heights.** The `input` rule (`padding: 10px; font-size: 16px`)
+> [Readme.md:L133-L136] and the `button` rule (`padding: 12px`) [Readme.md:L138-L145] render controls
+> ≈ 42 px and ≈ 39 px tall respectively — below the common 44 px minimum touch-target guideline
+> (their widths are ample). This is a known UI-quality limitation documented in full in
+> [`../functionality/styling.md`](../functionality/styling.md#accessibility-and-touch-target-limitations);
+> per the documentation-only scope, the source stylesheet is **not** modified (AAP 0.8.2).
+
 ### Color palette
 
 The stylesheet uses three literal colors for its surfaces and actions (the table-border and report-card greys are documented in the reference table above):
