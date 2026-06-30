@@ -28,13 +28,19 @@ The stylesheet contains **exactly eleven rule-blocks**, listed below in source o
 
 ### Color palette
 
-The entire palette is three colors — the page background and the two button states (`#f4f6f8` at `[Readme.md:L94]`, `#007bff` at `[Readme.md:L125]`, `#0056b3` at `[Readme.md:L133]`):
+The stylesheet declares **seven color values** in total — they span the page background, the card surface and its drop shadow, the two button states, and the report-card and table borders. The table below lists every color/token with the rule it belongs to and its exact source line:
 
-```css
-background: #f4f6f8; /* page background       (L94)  */
-background: #007bff; /* button (primary blue) (L125) */
-background: #0056b3; /* button:hover (darker) (L133) */
-```
+| Color / token | Declared by | Role | Source |
+|---|---|---|---|
+| `#f4f6f8` | `body { background }` | light-grey page background | `[Readme.md:L94]` |
+| `white` | `.container { background }` | white "card" surface | `[Readme.md:L102]` |
+| `rgba(0,0,0,0.1)` | `.container { box-shadow }` | soft 10%-opacity black drop shadow | `[Readme.md:L105]` |
+| `#007bff` | `button { background }` | primary blue action button | `[Readme.md:L125]` |
+| `#0056b3` | `button:hover { background }` | darker-blue button hover state | `[Readme.md:L133]` |
+| `#ddd` | `.report-card { border-top }` | light-grey separator above the report | `[Readme.md:L137]` |
+| `#ccc` | `table, th, td { border }` | light-grey table / cell grid border | `[Readme.md:L148]` |
+
+The colors most prominent in the visible UI are the page background `#f4f6f8` `[Readme.md:L94]` and the two button states `#007bff` / `#0056b3` `[Readme.md:L125]` `[Readme.md:L133]`; the remaining `white` `[Readme.md:L102]`, `rgba(0,0,0,0.1)` `[Readme.md:L105]`, `#ddd` `[Readme.md:L137]`, and `#ccc` `[Readme.md:L148]` provide the card surface, its shadow, and the grey separators and grid borders.
 
 > **Table-border detail.** `border-collapse: collapse` `[Readme.md:L143]` combined with `table, th, td { border: 1px solid #ccc; }` `[Readme.md:L147-L149]` yields single, non-doubled `#ccc` cell borders instead of the browser-default doubled borders between adjacent cells.
 

@@ -81,6 +81,7 @@ This block makes explicit the **expectation from the code** for F-008. Styling i
 ## Related Documents
 
 - [`../api-reference/css-reference.md`](../api-reference/css-reference.md) — the full selector / style reference (the exhaustive companion to this guide).
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for the fixed subject/score values (subjects, per-subject maximum, 500-point total, grade thresholds) that the styled marks table renders.
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the application's behavioral invariants and preconditions (note: styling is static and non-behavioral).
 - [`report-rendering.md`](report-rendering.md) — feature F-006, the rendered report-card DOM that these styles target.
 - [`../index.md`](../index.md) — back to the Documentation Hub.

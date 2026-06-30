@@ -80,5 +80,6 @@ This block states **the expectation from the code** — the conditions the jsPDF
 - [Documentation Hub](index.md) — back to the master table of contents.
 - [`api-reference/script-js.md`](api-reference/script-js.md) — the `generateReport()` and `downloadPDF()` function reference (exact signatures, DOM reads/writes, side effects).
 - [`functionality/pdf-export.md`](functionality/pdf-export.md) — the **F-007 PDF export** feature guide, including the DOM-read invariant and the PDF layout spec.
+- [`reference/data-schema.md`](reference/data-schema.md) — the single source of truth for the academic fixed values (five subjects, per-subject maximum, 500-point total, grade thresholds); the runtime/dependency behavior lives in [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) below.
 - [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) — invariants, preconditions, postconditions, and error modes (the single source of truth for the DOM-read invariant and the jsPDF-present precondition).
 - [`guides/getting-started.md`](guides/getting-started.md) — the zero-install run guide; notes the internet-access prerequisite for the CDN.

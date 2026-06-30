@@ -149,7 +149,7 @@ Both flowcharts below are validated against the cited source ranges and mirror t
 ```mermaid
 flowchart TD
     A["Read name and roll<br/>#studentName, #rollNumber (L163-L164)"]
-    B["Build subjects object, 5 subjects<br/>parseInt(value || 0) no-NaN guard (L166-L172)"]
+    B["Build subjects object, 5 subjects<br/>parseInt(document.getElementById('maths').value || 0) no-NaN guard (L166-L172)"]
     C["Initialise total = 0 (L174)"]
     D["Clear marks table<br/>tableBody.innerHTML = '' rebuild-from-scratch (L177)"]
     E["Loop subjects: total += marks<br/>append table row (L179-L190)"]

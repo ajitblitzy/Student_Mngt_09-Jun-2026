@@ -50,7 +50,7 @@ The report-card region is the `<div id="reportCard" class="report-card">` contai
 | `<div>` | `reportCard` | container (`class="report-card"`) for the rendered report | static container — not accessed via `getElementById` [Readme.md:L59] |
 | `<span>` | `rName` | rendered student name | written by `generateReport()` [Readme.md:L208]; read by `downloadPDF()` [Readme.md:L220] |
 | `<span>` | `rRoll` | rendered roll number | written by `generateReport()` [Readme.md:L209]; read by `downloadPDF()` [Readme.md:L221] |
-| `<tbody>` | `marksTable` | per-subject marks rows | cleared + appended by `generateReport()` [Readme.md:L176-L177, L189] |
+| `<tbody>` | `marksTable` | per-subject marks rows | cleared + appended by `generateReport()` [Readme.md:L176-L177] [Readme.md:L189] |
 | `<span>` | `totalMarks` | rendered total | written by `generateReport()` [Readme.md:L210]; read by `downloadPDF()` [Readme.md:L222] |
 | `<span>` | `percentage` | rendered percentage (2 decimals) | written by `generateReport()` [Readme.md:L211]; read by `downloadPDF()` [Readme.md:L223] |
 | `<span>` | `grade` | rendered grade | written by `generateReport()` [Readme.md:L212]; read by `downloadPDF()` [Readme.md:L224] |
@@ -96,7 +96,7 @@ The application logic is loaded at the **end of `<body>`** via `<script src="scr
 
 This section is the page's direct answer to *"highlight what is the expectation from the code."* It states the **structural contract** that the markup must satisfy for `script.js` to function.
 
-**Required IDs (precondition).** The application logic assumes **13 element IDs** exist in the DOM, spelled exactly as below — the **7 form inputs** plus the **6 report-card placeholders** [Readme.md:L46-L53, L59-L78]:
+**Required IDs (precondition).** The application logic assumes **13 element IDs** exist in the DOM, spelled exactly as below — the **7 form inputs** plus the **6 report-card placeholders** [Readme.md:L46-L53] [Readme.md:L59-L78]:
 
 | Group | Required IDs | Accessed by |
 | --- | --- | --- |
@@ -121,6 +121,7 @@ This page is part of a hub-and-spoke documentation set. Related references (path
 - [`css-reference.md`](css-reference.md) — the selector / style reference for the markup documented here.
 - [`../functionality/data-entry.md`](../functionality/data-entry.md) — the data-entry feature (**F-001**, **F-002**) that uses the form inputs.
 - [`../functionality/report-rendering.md`](../functionality/report-rendering.md) — the on-screen rendering feature (**F-006**) that writes these placeholders.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for the fixed subject input IDs (`maths`, `science`, `english`, `history`, `computer`) and the score schema (per-subject maximum, 500-point total, grade thresholds) referenced by the form-input IDs above.
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the single source of truth for invariants, including the DOM-read invariant and rebuild-from-scratch rendering.
 - [`../index.md`](../index.md) — back to the Documentation Hub.
 

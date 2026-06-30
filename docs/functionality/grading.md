@@ -116,7 +116,7 @@ flowchart TD
 | **Output** | Exactly one letter-grade **string** — one of `'A+'`, `'A'`, `'B'`, `'C'`, `'D'`, or `'F'` — written to the rendered DOM at `#grade` [Readme.md:L212]. |
 | **Determinism / totality** | Every `percentage` maps to **exactly one** grade. The ordered cascade is mutually exclusive (the implicit upper bounds prevent overlap) and the default grade `'F'` makes it total — there are **no gaps and no overlaps** [Readme.md:L194-L206]. |
 | **Default `'F'` retained** | When every `>=` test fails — i.e. `percentage < 50`, including the `0` that all-blank inputs yield through the percentage formula [Readme.md:L192] — the initial value set at `let grade = 'F';` is retained [Readme.md:L194], so `grade` is never empty or `undefined`. |
-| **Edge / boundary values** | Boundaries map **up**, because every comparison is `>=`: exactly `90` → `A+`, exactly `80` → `A`, exactly `70` → `B`, exactly `60` → `C`, and exactly `50` → `D` [Readme.md:L196-L204]. |
+| **Edge / boundary values** | Boundaries map **up**, because every comparison is `>=`: exactly `90` → `A+`, exactly `80` → `A`, exactly `70` → `B`, exactly `60` → `C`, and exactly `50` → `D` [Readme.md:L196-L205]. |
 | **No clamping** | Marks are never validated or clamped, so `percentage` can fall outside `0–100`. A `percentage` greater than `100` still yields `A+` (it satisfies `>= 90`) and a negative `percentage` still yields `F` (it fails every test). The invariant is owned by [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). |
 
 ---
