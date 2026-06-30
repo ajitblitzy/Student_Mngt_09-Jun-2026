@@ -27,7 +27,7 @@ The four headline capabilities, taken verbatim from the project Overview `[Readm
 - **Generate a formatted student report** `[Readme.md:L4-L8]`
 - **Export the report as a PDF file** `[Readme.md:L4-L8]`
 
-Each capability maps to one or more features in the application's canonical feature decomposition (F-001 through F-008). The table below is intentionally brief; the detailed feature documentation lives under [`../functionality/`](../functionality/), and the fixed values these capabilities depend on — the five subjects, the per-subject maximum, the `500`-point denominator, and the grade thresholds — are owned by [`../reference/data-schema.md`](../reference/data-schema.md), the single source of truth for fixed values.
+Each capability maps to one or more features in the application's canonical feature decomposition (F-001 through F-008). The table below is intentionally brief; the detailed feature documentation lives under [`../functionality/`](../functionality/data-entry.md), and the fixed values these capabilities depend on — the five subjects, the per-subject maximum, the `500`-point denominator, and the grade thresholds — are owned by [`../reference/data-schema.md`](../reference/data-schema.md), the single source of truth for fixed values.
 
 | Capability `[Readme.md:L4-L8]` | Feature ID(s) | Detailed Documentation |
 |---|---|---|

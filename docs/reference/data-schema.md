@@ -24,7 +24,7 @@ All values on this page are extracted from the application source embedded in `R
 
 The application reads exactly **five subjects**, in one fixed order, inside `generateReport()` [Readme.md:L166-L172]. Each subject is read from its own HTML `<input type="number">` element by ID [Readme.md:L49-L53] and coerced to an integer with `parseInt(... .value || 0)`.
 
-| Subject | Input ID | Type | Default (blank/invalid) |
+| Subject | Input ID | Type | Default (blank/falsy) |
 | --- | --- | --- | --- |
 | Maths | `#maths` [Readme.md:L49] | `number` (HTML input; parsed via `parseInt`) [Readme.md:L167] | `0` |
 | Science | `#science` [Readme.md:L50] | `number` (HTML input; parsed via `parseInt`) [Readme.md:L168] | `0` |
@@ -34,7 +34,7 @@ The application reads exactly **five subjects**, in one fixed order, inside `gen
 
 The subjects are read in the exact source order **Maths → Science → English → History → Computer** [Readme.md:L167-L171], and that same order is preserved when the marks table is rendered.
 
-The `0` in the **Default (blank/invalid)** column comes from the **no-NaN guard** — the `|| 0` inside `parseInt(... .value || 0)` [Readme.md:L167-L171]. A blank or otherwise falsy `.value` becomes `0` *before* `parseInt` runs, so an empty field contributes `0` rather than `NaN`. This is the data-entry default for feature **F-002 (Marks Entry)**.
+The `0` in the **Default (blank/falsy)** column comes from the **no-NaN guard** — the `|| 0` inside `parseInt(... .value || 0)` [Readme.md:L167-L171]. A blank or otherwise **falsy** `.value` becomes `0` *before* `parseInt` runs, so an empty field contributes `0` rather than `NaN`. This guards **only** blank/falsy values; it is **not** general input validation — a **truthy non-numeric** `.value` (for example `"abc"`) is **not** defaulted by `|| 0` and would `parseInt` to `NaN`. The most precise statement of this scope is the marks-entry note in [`../functionality/data-entry.md`](../functionality/data-entry.md). This is the data-entry default for feature **F-002 (Marks Entry)**.
 
 ---
 

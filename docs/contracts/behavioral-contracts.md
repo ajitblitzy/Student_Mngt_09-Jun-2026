@@ -28,7 +28,7 @@ The five behavioral guarantees below hold on every run, by construction of the c
 | # | Invariant | Guarantee (one line) | Source |
 | --- | --- | --- | --- |
 | 1 | Rebuild-from-scratch rendering | The marks table is cleared and rebuilt every run, yielding exactly five rows | [Readme.md:L176-L177] |
-| 2 | No-NaN guard | Blank/falsy inputs default to `0`, so every subject value and `total` is always numeric | [Readme.md:L167-L171] |
+| 2 | No-NaN guard | Blank/falsy `.value` defaults to `0` before `parseInt`, preventing blank-field `NaN`; it is **not** general validation — a truthy non-numeric `.value` can still parse to `NaN` | [Readme.md:L167-L171] |
 | 3 | Fixed 2-decimal percentage precision | The *displayed* percentage is a 2-decimal string via `.toFixed(2)` | [Readme.md:L211] |
 | 4 | Default grade `'F'` | `grade` starts at `'F'` and is retained when every threshold test fails | [Readme.md:L194] |
 | 5 | DOM-read invariant | `downloadPDF()` reads the rendered DOM, not the form inputs | [Readme.md:L220-L224] |
@@ -52,7 +52,7 @@ Each subject is read and coerced with `parseInt(document.getElementById('<id>').
 Maths: parseInt(document.getElementById('maths').value || 0),
 ```
 
-The `|| 0` makes a blank or otherwise falsy `.value` default to `0` **before** `parseInt` runs, so every subject value — and therefore the accumulated `total` — is always a number; an empty field contributes `0` rather than `NaN`. This guard protects **only** against blank/falsy input: it does **not** clamp negative values or values greater than the per-subject maximum, because there is no range validation anywhere in the source. The (unenforced) per-subject maximum of `100` is documented in [`../reference/data-schema.md`](../reference/data-schema.md). See [`../functionality/data-entry.md`](../functionality/data-entry.md) (**F-002**) for marks entry.
+The `|| 0` makes a blank or otherwise falsy `.value` default to `0` **before** `parseInt` runs, so an empty field contributes `0` rather than `NaN`. This guard is **not** a general validation mechanism: it protects **only** against blank/falsy `.value`. A **truthy non-numeric** `.value` (for example `"abc"`) is **not** guarded and would `parseInt` to `NaN`, which would then propagate into the accumulated `total`; likewise the guard does **not** clamp negative values or values greater than the per-subject maximum, because there is no range validation anywhere in the source. The (unenforced) per-subject maximum of `100` is documented in [`../reference/data-schema.md`](../reference/data-schema.md). The most precise statement of this scope is the marks-entry note in [`../functionality/data-entry.md`](../functionality/data-entry.md) (**F-002**).
 
 ### 3. Fixed 2-decimal percentage precision
 

@@ -97,7 +97,7 @@ Every document in the `docs/` tree is listed below, grouped for reader-friendly 
 
 ## Reading Guide & Navigation Model
 
-**Hub-and-spoke navigation.** This page (`docs/index.md`) is the hub and entry point. At the final checkpoint, the repository-root `Readme.md` will link here through a **Documentation** section; every document in the `docs/` tree already links **back to this hub**. From any page you are at most one click from the master table of contents above.
+**Hub-and-spoke navigation.** This page (`docs/index.md`) is the hub and entry point. The repository-root `Readme.md` links here through a **Documentation** section, and every document in the `docs/` tree links **back to this hub**. From any page you are at most one click from the master table of contents above.
 
 **Single source of truth.** To prevent drift, two documents are authoritative and are never duplicated elsewhere:
 

@@ -1,6 +1,6 @@
 # Script Reference — script.js
 
-## Overview
+## Purpose
 
 The application's behavioral logic lives in a single embedded `script.js` block that exposes **exactly two public, global functions**, each wired to a button through an inline `onclick` handler [Readme.md:L55-L56]:
 
@@ -11,7 +11,13 @@ Both functions are **parameterless** and **side-effecting**: they take no argume
 
 All content on this page is **code-grounded**: every technical claim carries an inline `[Readme.md:Lx-Ly]` citation pointing at the source embedded in the repository-root `Readme.md`. The standalone `script.js` implied by the README's project tree does not physically exist, so `Readme.md` is the sole source. This is a documentation-only reference and does not modify any source code.
 
-**Source:** [Readme.md:L161-L238]
+## Source Location
+
+The behavioral logic is the embedded `script.js` block in the repository-root `Readme.md`:
+
+- **Full `script.js` block:** [Readme.md:L161-L238]
+- **`generateReport()`:** [Readme.md:L162-L213]
+- **`downloadPDF()`:** [Readme.md:L215-L237]
 
 ---
 
@@ -63,11 +69,11 @@ The behavior rests on the application's documented invariants. The full definiti
 - **Fixed 2-decimal display.** Only the **displayed** `#percentage` is a 2-decimal string produced by `.toFixed(2)` [Readme.md:L211]; the internal `percentage` value keeps full numeric precision [Readme.md:L192], and `#totalMarks` is written unformatted [Readme.md:L210]. The stored number is **not** rounded.
 - **Default grade `'F'`.** `grade` is initialized to `'F'` [Readme.md:L194] and reassigned by an ordered `if/else-if` cascade; `'F'` is retained when every threshold test fails (percentage below 50) [Readme.md:L196-L206]. The canonical thresholds live in [`../reference/data-schema.md`](../reference/data-schema.md).
 
-Short verbatim excerpt — the no-NaN guard and the percentage formula:
+Short verbatim excerpt — the no-NaN guard [Readme.md:L167] and the percentage formula [Readme.md:L192]:
 
 ```javascript
-Maths: parseInt(document.getElementById('maths').value || 0), // L167
-const percentage = (total / 500) * 100;                       // L192
+Maths: parseInt(document.getElementById('maths').value || 0),
+const percentage = (total / 500) * 100;
 ```
 
 ### Worked example (illustrative)
@@ -131,11 +137,11 @@ There is **no programmatic error handling** in the function — no `try/catch` b
 - **`TypeError` when `window.jspdf` is `undefined`.** If the jsPDF CDN script is unreachable, blocked, offline, or has not yet loaded, the destructuring line `const { jsPDF } = window.jspdf;` throws a `TypeError` ("cannot destructure property `jsPDF` of `undefined`") [Readme.md:L216]. The failure surfaces only in the browser console.
 - **Silent blank PDF when "Download" precedes "Generate".** Clicking Download PDF before Generate Report throws **no** error, but because the rendered DOM was never populated, the saved PDF contains blank / default field values [Readme.md:L220-L224].
 
-Short verbatim excerpt — the dependency destructure and the save:
+Short verbatim excerpt — the dependency destructure [Readme.md:L216] and the save [Readme.md:L236]:
 
 ```javascript
-const { jsPDF } = window.jspdf;   // L216 — throws TypeError if undefined
-doc.save(`${name}_Report.pdf`);   // L236
+const { jsPDF } = window.jspdf;
+doc.save(`${name}_Report.pdf`);
 ```
 
 ---

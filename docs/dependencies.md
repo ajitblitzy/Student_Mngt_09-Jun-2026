@@ -69,9 +69,41 @@ This block states **the expectation from the code** — the conditions the jsPDF
 | **Precondition — ordering** | `downloadPDF()` reads from the **rendered report-card DOM**, not the form inputs, so **"Generate Report" must be clicked before "Download PDF"** [Readme.md:L220-L224]. The full **DOM-read invariant** lives in [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) and [`functionality/pdf-export.md`](functionality/pdf-export.md) and is not duplicated here. |
 | **Postcondition — success** | A PDF file named `` `${name}_Report.pdf` `` is generated and downloaded [Readme.md:L236], where `name` is read from the rendered `#rName` element [Readme.md:L220]. |
 | **Failure mode — CDN unreachable** | If the CDN is unreachable or blocked (offline, firewall, or CDN outage), `window.jspdf` is `undefined`, and the line `const { jsPDF } = window.jspdf;` [Readme.md:L216] throws a **`TypeError`** ("Cannot destructure property 'jsPDF' of 'undefined' …"). There is **no `try`/`catch` and no programmatic error handling** anywhere in the code, so the failure surfaces **only in the browser console** — the page displays no on-screen error. This is the documented, expected behavior. |
-| **Version contract** | The application is pinned to jsPDF **2.5.1** [Readme.md:L38]. This documentation records the in-use version **as-is** and does **not** upgrade it; any version change would be a code task and is out of scope. |
+| **Version contract** | The application is pinned to jsPDF **2.5.1** [Readme.md:L38]. This documentation records the in-use version **as-is** and does **not** upgrade it; any version change would be a code task and is out of scope. This pinned version has **known published security advisories** — see [Security Considerations](#security-considerations) below. |
 
 > **Summary.** Given internet access at load (so `window.jspdf` is defined) and a report generated first (so the rendered DOM is populated), `downloadPDF()` deterministically produces a download named `<name>_Report.pdf` [Readme.md:L236]. Remove either precondition and the function either throws a `TypeError` (no jsPDF available) or exports a report card built from empty/stale DOM values (no prior "Generate Report").
+
+---
+
+## Security Considerations
+
+The pinned runtime dependency is **jsPDF 2.5.1** [Readme.md:L38]. This documentation-only task records that version **as-is** and does **not** change it — changing the pinned CDN version is a code/dependency task and is **out of scope** per AAP §0.8.2. For an accurate security posture, the known risk of the pinned version is surfaced here rather than silently omitted.
+
+### Known advisories for jsPDF 2.5.1
+
+Public vulnerability databases (OSV, Snyk, and GitHub Security Advisories) track **multiple known advisories** against jsPDF 2.5.1. A read-only OSV query for the package coordinate `pkg:npm/jspdf@2.5.1` surfaces advisories spanning the following categories:
+
+| Category | Summary | Affected API surface |
+|---|---|---|
+| Denial of service (ReDoS) | An inefficient regular expression in `setDisplayMode` can be driven to high CPU load (regular-expression denial of service). | `setDisplayMode` |
+| Denial of service (CPU exhaustion) | User-controlled input to `addImage` can cause excessive CPU utilization. | `addImage` |
+| Local file inclusion / path traversal | A later disclosure (CVE-2025-68428 / GHSA-f8cm-6447-x5h2) allows reading arbitrary files via a user-controlled `addImage` path and embedding their contents in the output PDF. **This affects the Node.js builds only** (`dist/jspdf.node.js`), **not** the browser UMD build used by this project. | `addImage` (Node.js builds) |
+| Injection-class / metadata | Additional object- and metadata-injection-class advisories are reported against the 2.x line by the security databases. | various |
+
+> The exact advisory inventory and severities evolve over time; consult OSV, Snyk, or GitHub Security Advisories for the current authoritative list. The categories above are representative, not exhaustive.
+
+### Reachability in this application
+
+This project loads the **browser UMD build** from cdnjs [Readme.md:L38], and `downloadPDF()` uses only **`setFontSize`**, **`text`**, and **`save`** [Readme.md:L215-L237] — it never calls `addImage` or `setDisplayMode`. Consequently:
+
+- The `addImage`-based advisories (the CPU-exhaustion DoS and the CVE-2025-68428 path-traversal/LFI) are **not exercised** by the current code path; the path-traversal CVE additionally affects only the Node.js builds, not the browser UMD build in use here.
+- The `setDisplayMode` ReDoS is likewise **not reached**.
+
+Reachability **reduces**, but does not eliminate, the dependency risk: the vulnerable code still ships inside the loaded library, and any future code change that begins calling the affected methods would expose the application. The risk is therefore documented rather than dismissed.
+
+### Follow-up work item
+
+- **Evaluate upgrading jsPDF** to a current patched release in a **separate code/dependency task**, and re-verify the `downloadPDF()` integration (`setFontSize`/`text`/`save`) after any upgrade. This evaluation is **out of scope** for the present documentation-only change (AAP §0.8.2) and must not alter the pinned CDN version in this task.
 
 ---
 

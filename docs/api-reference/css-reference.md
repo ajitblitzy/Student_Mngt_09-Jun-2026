@@ -4,7 +4,11 @@
 
 This page is the **selector / style reference** for the Student Report Generator's presentation layer — feature **F-008 static visual styling**. It catalogs every CSS selector and its key declarations, and it serves as the precise style companion to the prose feature guide in [`../functionality/styling.md`](../functionality/styling.md). All content here is **code-grounded**: it is extracted from the `style.css` block embedded in the repository-root `Readme.md`, and every technical claim carries an inline `[Readme.md:Lx-Ly]` citation. This is a documentation-only reference and does not modify any source code.
 
-**Source:** `[Readme.md:L91-L155]`
+## Source Location
+
+This reference is extracted from the `style.css` block embedded in the repository-root `Readme.md`:
+
+- **Stylesheet (all eleven rule-blocks):** `[Readme.md:L91-L155]`
 
 ---
 
@@ -63,9 +67,18 @@ The embedded README advertises a "Responsive UI" feature `[Readme.md:L253]`. To 
 
 ---
 
-## Expected Presentation
+## Expected Behavior / Contract
 
-With this stylesheet applied, the app renders as a **centered white card (≤ 800px wide) on a light-grey background**: a vertically stacked form of padded, 16px-font inputs; blue action buttons that darken to `#0056b3` on hover; and, beneath a top-bordered report-card section, a full-width, center-aligned marks table with single 1px `#ccc` grid borders `[Readme.md:L92-L154]`. This styling is **static and purely presentational** — it governs only the appearance of the rendered DOM and has no effect on the computation or PDF-export logic.
+This block states the explicit **expectation from the code** for the presentation layer (**F-008**). The stylesheet is static and declarative, so its "behavior" is the visual contract it imposes on the rendered DOM. The full catalog of *application* behavioral invariants is owned by [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md); this page covers only the presentation contract.
+
+| Aspect | Contract |
+|---|---|
+| **Inputs / applicability** | Rules apply purely by selector match against the markup — the element types (`body`, `input`, `button`, `table`, `th`, `td`), the classes `.container`, `.form-section`, `.report-card`, and the grouped `h1, h2` selector `[Readme.md:L91-L155]`. No element needs a special hook beyond matching these selectors. |
+| **Preconditions** | The HTML must attach this stylesheet via `<link rel="stylesheet" href="style.css">` `[Readme.md:L35]` and use the matching element/class names (see [`html-structure.md`](html-structure.md)); the viewport `<meta>` tag must be present for width scaling `[Readme.md:L32]`. |
+| **Expected presentation** | With this stylesheet applied, the app renders as a **centered white card (≤ 800px wide) on a light-grey background**: a vertically stacked form of padded, 16px-font inputs; blue action buttons that darken to `#0056b3` on hover; and, beneath a top-bordered report-card section, a full-width, center-aligned marks table with single 1px `#ccc` grid borders `[Readme.md:L92-L154]`. |
+| **Side effects** | **None on application logic.** The stylesheet is **static and purely presentational** — it governs only the appearance of the rendered DOM and has no effect on the computation, grading, rendering, or PDF-export logic `[Readme.md:L91-L155]`. |
+| **Invariants** | The stylesheet declares **no `@media` queries, flexbox, animations, or transitions** `[Readme.md:L91-L155]`; the only responsiveness is the viewport meta tag plus the fluid `max-width: 800px` container and the single-column grid form — there are no breakpoints. |
+| **Failure mode** | If the stylesheet fails to load, the app falls back to unstyled browser defaults but remains **fully functional** — data entry, computation, grading, rendering, and PDF export are unaffected `[Readme.md:L35]`. |
 
 ---
 

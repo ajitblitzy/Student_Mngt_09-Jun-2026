@@ -31,19 +31,19 @@ The page sits on a light-grey background, and the action buttons use a primary b
 - White card with a soft `rgba(0,0,0,0.1)` drop shadow `[Readme.md:L102-L105]`.
 
 ```css
-background: #f4f6f8;   /* body         */
-background: #007bff;   /* button       */
-background: #0056b3;   /* button:hover */
+background: #f4f6f8;
+background: #007bff;
+background: #0056b3;
 ```
-*The three palette anchors, verbatim from the source `[Readme.md:L94]`, `[Readme.md:L125]`, `[Readme.md:L133]`.*
+*The three palette anchors — the `body` background `[Readme.md:L94]`, the `button` background `[Readme.md:L125]`, and the `button:hover` background `[Readme.md:L133]` — quoted verbatim from the source.*
 
 ### Table styling
 
 The marks table is full-width, uses collapsed borders, and has 15px of top margin `[Readme.md:L141-L145]`. A 1px `#ccc` border is applied to the table and to every header and data cell `[Readme.md:L147-L149]`, and all cells are padded and center-aligned `[Readme.md:L151-L154]`. Because `border-collapse: collapse` `[Readme.md:L143]` combines with the shared `table, th, td { border: 1px solid #ccc; }` rule `[Readme.md:L147-L149]`, adjacent cell borders merge into single (non-doubled) 1px lines:
 
 ```css
-border-collapse: collapse;   /* table         */
-border: 1px solid #ccc;      /* table, th, td  */
+border-collapse: collapse;
+border: 1px solid #ccc;
 ```
 
 The rendered report is visually separated from the form above it by a 2px `#ddd` top border on `.report-card` `[Readme.md:L136-L139]`.
