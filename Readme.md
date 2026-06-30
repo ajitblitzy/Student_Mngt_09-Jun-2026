@@ -9,6 +9,21 @@ This project allows users to:
 
 ---
 
+## Documentation
+
+Comprehensive, code-grounded documentation for this project lives in the [`docs/`](docs/index.md) directory. It is organized so that **each functionality is documented separately** and every unit states its **expected behavior (contract)**.
+
+Start at the **[Documentation Hub](docs/index.md)** for the full table of contents. Key functionality guides:
+
+- [Data Entry](docs/functionality/data-entry.md) — student identity capture and subject marks entry
+- [Computation](docs/functionality/computation.md) — total marks and percentage calculation
+- [Grading](docs/functionality/grading.md) — grade assignment rules and thresholds
+- [Report Rendering](docs/functionality/report-rendering.md) — on-screen report card generation
+- [PDF Export](docs/functionality/pdf-export.md) — exporting the report as a PDF
+- [Styling](docs/functionality/styling.md) — visual presentation and layout
+
+---
+
 # Project Structure
 
 ```text
