@@ -58,7 +58,7 @@ sequenceDiagram
 ```mermaid
 flowchart TD
     A["Read name and roll<br/>#studentName, #rollNumber (L163-L164)"]
-    B["Build subjects object, 5 subjects<br/>parseInt(value || 0) no-NaN guard (L166-L172)"]
+    B["Build subjects object, 5 subjects<br/>parseInt(document.getElementById('maths').value || 0) no-NaN guard (L166-L172)"]
     C["Initialise total = 0 (L174)"]
     D["Clear marks table<br/>tableBody.innerHTML = '' rebuild-from-scratch (L177)"]
     E["Loop subjects: total += marks<br/>append table row (L179-L190)"]
@@ -68,7 +68,7 @@ flowchart TD
     A --> B --> C --> D --> E --> F --> G --> H
 ```
 
-*Validated against [Readme.md:L162-L213].* For the exact function signature, parameters, and the full reads/writes contract, see [`../api-reference/script-js.md`](../api-reference/script-js.md); for the grade-assignment cascade detail and its decision flowchart, see [`../functionality/grading.md`](../functionality/grading.md).
+*Validated against [Readme.md:L162-L213].* For the exact function signature, parameters, and the full reads/writes contract, see [`../api-reference/script-js.md`](../api-reference/script-js.md); for the grade-assignment cascade detail and its decision flowchart, see [`../functionality/grading.md`](../functionality/grading.md); and for the fixed five-subject schema and the `500`-point denominator behind the total and percentage computation, see [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for fixed values.
 
 ---
 
@@ -98,6 +98,7 @@ This page is part of a hub-and-spoke documentation set. Related references (path
 - [`../api-reference/script-js.md`](../api-reference/script-js.md) — exact function signatures, parameters, and the full reads/writes contracts for `generateReport()` and `downloadPDF()`.
 - [`../functionality/pdf-export.md`](../functionality/pdf-export.md) — the F-007 PDF export feature and the DOM-read invariant in context.
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the single source of truth for invariants, preconditions, and postconditions.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for fixed values: the five subjects, the `500`-point denominator, and the grade thresholds behind this data flow.
 - [`overview.md`](overview.md) — system context, capabilities, and the high-level architecture diagram.
 - [`component-model.md`](component-model.md) — the three logical components plus the jsPDF dependency and their relationships.
 - [`../index.md`](../index.md) — back to the Documentation Hub.

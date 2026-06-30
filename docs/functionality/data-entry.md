@@ -78,11 +78,11 @@ This section is the explicit **expectation from the code** for the Data Entry st
 | **Inputs** | Two identity strings (`#studentName`, `#rollNumber`) plus five numeric marks (`#maths`, `#science`, `#english`, `#history`, `#computer`). | [Readme.md:L46-L53] |
 | **Acceptance (no validation)** | All inputs are accepted **as-is**. Identity strings are not validated, trimmed, or required. | [Readme.md:L163-L164] |
 | **Marks not range-checked** | Marks are read and coerced to numbers but are never range-checked. | [Readme.md:L166-L172] |
-| **Blank/invalid marks → `0`** | A blank or falsy `.value` defaults to `0` via the no-NaN guard, so every subject value is always numeric — never `NaN`. | [Readme.md:L167-L171] |
+| **Blank/falsy marks → `0`** | A blank or otherwise **falsy** `.value` defaults to `0` *before* `parseInt` runs (the no-NaN guard), so an empty field contributes `0` rather than `NaN`. There is no validation, trimming, or clamping — a **truthy non-numeric** `.value` (e.g. `"abc"`) is **not** guarded and would `parseInt` to `NaN`. | [Readme.md:L167-L171] |
 | **No clamping** | Negative values and values greater than `100` are accepted **unchanged**; there is no min/max enforcement. The *intended* per-subject maximum of `100` (see [`../reference/data-schema.md`](../reference/data-schema.md)) is **not** enforced. | [Readme.md:L166-L172] |
 | **Preconditions** | The seven input element IDs must exist in the DOM exactly as spelled (see [`../api-reference/html-structure.md`](../api-reference/html-structure.md)); a missing ID would cause a `null` read and a `TypeError` downstream. | [Readme.md:L46-L53], [Readme.md:L162-L172] |
 | **Side effects** | None in the data-entry step itself — values are only **read** here; the table rebuild, computation, and rendering happen later in `generateReport()`. | [Readme.md:L162-L172] |
-| **Outputs (postcondition)** | `name` and `roll` captured as strings, and a `subjects` object of five numeric values, ready for computation. | [Readme.md:L163-L172] |
+| **Outputs (postcondition)** | `name` and `roll` captured as strings, and a `subjects` object with five entries — each the result of `parseInt(.value || 0)` — ready for computation. | [Readme.md:L163-L172] |
 
 **Most commonly misunderstood point:** the `|| 0` guard's scope is the `.value` only. It prevents `NaN` from blank fields but performs **no** range validation — negatives and values above `100` pass through untouched. The full invariant catalog, including this no-NaN guard, is the single source of truth in [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md).
 

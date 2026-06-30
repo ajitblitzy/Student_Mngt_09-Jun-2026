@@ -27,7 +27,7 @@ The four headline capabilities, taken verbatim from the project Overview `[Readm
 - **Generate a formatted student report** `[Readme.md:L4-L8]`
 - **Export the report as a PDF file** `[Readme.md:L4-L8]`
 
-Each capability maps to one or more features in the application's canonical feature decomposition (F-001 through F-008). The table below is intentionally brief; the detailed feature documentation lives under [`../functionality/`](../functionality/).
+Each capability maps to one or more features in the application's canonical feature decomposition (F-001 through F-008). The table below is intentionally brief; the detailed feature documentation lives under [`../functionality/`](../functionality/), and the fixed values these capabilities depend on — the five subjects, the per-subject maximum, the `500`-point denominator, and the grade thresholds — are owned by [`../reference/data-schema.md`](../reference/data-schema.md), the single source of truth for fixed values.
 
 | Capability `[Readme.md:L4-L8]` | Feature ID(s) | Detailed Documentation |
 |---|---|---|
@@ -73,7 +73,7 @@ flowchart LR
     PDF -->|"downloaded"| User
 ```
 
-*High-level architecture, validated against `[Readme.md:L35, L38, L81, L216, L236]`.*
+*High-level architecture, validated against `[Readme.md:L35]`, `[Readme.md:L38]`, `[Readme.md:L81]`, `[Readme.md:L216]`, `[Readme.md:L236]`.*
 
 ---
 
@@ -84,6 +84,7 @@ This page is the hub of the architecture set; each document below links back to 
 - [`component-model.md`](component-model.md) — the three logical components (markup, styling, logic) plus the jsPDF dependency, with their responsibilities and a component-relationship diagram.
 - [`data-flow.md`](data-flow.md) — the DOM-mediated end-to-end data flow and the per-function flowcharts for `generateReport()` and `downloadPDF()`.
 - [`../dependencies.md`](../dependencies.md) — the jsPDF 2.5.1 CDN integration contract and the CDN-availability precondition.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for the fixed values behind these capabilities: the five subjects, the `500`-point denominator, and the grade thresholds.
 - [`../index.md`](../index.md) — back to the Documentation Hub.
 
 ---

@@ -92,7 +92,7 @@ Because the `<tbody>` is wiped first and then exactly one `<tr>` is appended per
 
 Without this clear step, repeated clicks of **Generate Report** would append duplicate rows on top of the previous ones; the clear is what keeps the table render idempotent across runs.
 
-This invariant is owned by the project's behavioral-contracts document, which is the single source of truth for it — see [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md).
+This invariant is owned by the project's behavioral-contracts document, which is the single source of truth for it — see [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md). The fixed five-subject schema that determines the table's row count, together with the `500`-point total/denominator, is owned by [`../reference/data-schema.md`](../reference/data-schema.md) (the single source of truth for fixed values).
 
 ---
 
@@ -121,6 +121,7 @@ The required-IDs precondition, the rebuild-from-scratch invariant, and the DOM-r
 
 - [`../api-reference/html-structure.md`](../api-reference/html-structure.md) — the full report-card element/ID reference and function wiring.
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the single source of truth for the rebuild-from-scratch invariant, the required-IDs precondition, and the DOM-read invariant.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for the fixed five-subject schema (the table's five rows) and the `500`-point total/denominator.
 - [`computation.md`](computation.md) and [`grading.md`](grading.md) — the sources of the rendered `total`, `percentage`, and `grade` values.
 - [`pdf-export.md`](pdf-export.md) — the downstream consumer (F-007) that reads this rendered DOM (the DOM-read invariant).
 - [`../index.md`](../index.md) — back to the Documentation Hub.

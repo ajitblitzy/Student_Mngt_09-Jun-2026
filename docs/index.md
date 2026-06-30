@@ -17,16 +17,16 @@ This documentation set was authored to satisfy two explicit goals:
 
 ## How This Documentation Is Organized
 
-The organizing principle is **separation by functionality**: rather than one large file, the application is decomposed into **four functional layers** containing **eight discrete features (F-001 … F-008)**, and each feature is documented on its own page. The table below is the canonical decomposition; the **Primary Doc** column links to the page that owns each feature.
+The organizing principle is **separation by functionality**: rather than one large file, the application is decomposed into **four functional layers** containing **eight discrete features (F-001 … F-008)**, and each feature is mapped to a clearly separated **primary functionality document** (closely related features are grouped onto one page — for example **F-001** and **F-002** in `data-entry.md`, and **F-003** and **F-004** in `computation.md`). The table below is the canonical decomposition; the **Primary Doc** column links to the page that owns each feature.
 
 | Layer | Feature ID | Feature | Primary Doc |
 |---|---|---|---|
-| Data Entry | F-001 | Identity Capture (name, roll) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L46-L47, L162-L164] |
-| Data Entry | F-002 | Marks Entry (5 subjects) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L49-L53, L166-L172] |
+| Data Entry | F-001 | Identity Capture (name, roll) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L46-L47], [Readme.md:L162-L164] |
+| Data Entry | F-002 | Marks Entry (5 subjects) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L49-L53], [Readme.md:L166-L172] |
 | Computation | F-003 | Total Aggregation | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L174-L190] |
-| Computation | F-004 | Percentage | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L192, L211] |
+| Computation | F-004 | Percentage | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L192], [Readme.md:L211] |
 | Computation | F-005 | Grade Assignment | [`functionality/grading.md`](functionality/grading.md) [Readme.md:L194-L206] |
-| Presentation | F-006 | On-Screen Report Render | [`functionality/report-rendering.md`](functionality/report-rendering.md) [Readme.md:L59-L78, L176-L212] |
+| Presentation | F-006 | On-Screen Report Render | [`functionality/report-rendering.md`](functionality/report-rendering.md) [Readme.md:L59-L78], [Readme.md:L176-L212] |
 | Export | F-007 | PDF Export | [`functionality/pdf-export.md`](functionality/pdf-export.md) [Readme.md:L215-L237] |
 | Presentation | F-008 | Static Visual Styling | [`functionality/styling.md`](functionality/styling.md) [Readme.md:L91-L155] |
 
@@ -68,8 +68,8 @@ Every document in the `docs/` tree is listed below, grouped for reader-friendly 
 
 ### 3. Functionality (clearly separated, F-001 … F-008)
 
-- [`functionality/data-entry.md`](functionality/data-entry.md) — **F-001 Identity Capture** + **F-002 Marks Entry**: reading the **form inputs**, with the `parseInt(value) || 0` no-NaN guard [Readme.md:L162-L172].
-- [`functionality/computation.md`](functionality/computation.md) — **F-003 Total Aggregation** + **F-004 Percentage**: the running total and `(total / 500) * 100` rendered with `.toFixed(2)` [Readme.md:L192, L211].
+- [`functionality/data-entry.md`](functionality/data-entry.md) — **F-001 Identity Capture** + **F-002 Marks Entry**: reading the **form inputs**, with the no-NaN guard `parseInt(document.getElementById('maths').value || 0)` — a blank/falsy `.value` defaults to `0` before parsing, and no general invalid-input validation is performed [Readme.md:L166-L172].
+- [`functionality/computation.md`](functionality/computation.md) — **F-003 Total Aggregation** + **F-004 Percentage**: the running total and `(total / 500) * 100` rendered with `.toFixed(2)` [Readme.md:L192], [Readme.md:L211].
 - [`functionality/grading.md`](functionality/grading.md) — **F-005 Grade Assignment**: the threshold cascade with a default of `'F'`, plus a grade-decision flowchart [Readme.md:L194-L206].
 - [`functionality/report-rendering.md`](functionality/report-rendering.md) — **F-006 On-Screen Report Render**: the **rebuild-from-scratch** marks-table invariant and the DOM writes back to the report card [Readme.md:L176-L212].
 - [`functionality/pdf-export.md`](functionality/pdf-export.md) — **F-007 PDF Export**: the **DOM-read invariant** (reads the rendered report, not the form inputs) and the `${name}_Report.pdf` filename [Readme.md:L215-L237].
@@ -97,14 +97,14 @@ Every document in the `docs/` tree is listed below, grouped for reader-friendly 
 
 ## Reading Guide & Navigation Model
 
-**Hub-and-spoke navigation.** This page (`docs/index.md`) is the hub and entry point. The repository-root `Readme.md` links here through its **Documentation** section, and every document in the tree links **back to this hub**. From any page you are at most one click from the master table of contents above.
+**Hub-and-spoke navigation.** This page (`docs/index.md`) is the hub and entry point. At the final checkpoint, the repository-root `Readme.md` will link here through a **Documentation** section; every document in the `docs/` tree already links **back to this hub**. From any page you are at most one click from the master table of contents above.
 
 **Single source of truth.** To prevent drift, two documents are authoritative and are never duplicated elsewhere:
 
 - [`reference/data-schema.md`](reference/data-schema.md) owns the **fixed values** (subjects, the per-subject maximum, the `500` denominator, and the grade thresholds).
 - [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) owns the **invariants and preconditions** (the expectation from the code).
 
-Every other document **links to** these two rather than restating them, so any change is made in exactly one place.
+Documents that discuss those fixed values or invariants **link to** these authorities rather than restating them, so any change is made in exactly one place.
 
 **Suggested reading path for a new reader:**
 

@@ -98,7 +98,7 @@ This block states **the expectation from the code** for the PDF export — the c
 | **Precondition 1 — ordering / DOM-read invariant** | `generateReport()` MUST have run first. `downloadPDF()` reads the **rendered report-card spans** (`#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade`), **not** the form inputs [Readme.md:L220-L224]; if the report card was never rendered, the read values are empty/default. **Generate Report must run before Download PDF.** |
 | **Precondition 2 — jsPDF present** | `window.jspdf` MUST be populated by the cdnjs `<script>` tag [Readme.md:L38] before `downloadPDF()` destructures it [Readme.md:L216]. This is the **jsPDF-present precondition**, and it requires **internet access at page load** (CDN-availability). |
 | **Inputs** | The five rendered report-card values read via `.innerText`: `#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade` [Readme.md:L220-L224]. |
-| **Output / Postcondition** | A PDF named `` `${name}_Report.pdf` `` is generated and downloaded [Readme.md:L236], laid out exactly per the [PDF Layout](#pdf-layout) table — title at font 18, five body lines at font 12. |
+| **Output / Postcondition** | A PDF named `` `${name}_Report.pdf` `` is generated and downloaded [Readme.md:L236], laid out exactly per the [PDF Layout](#pdf-layout) table — title at font 18, five body lines at font 12. The exported **Total**, **Percentage**, and **Grade** values mirror the rendered report card, which derives from the fixed five-subject schema and `500`-point denominator owned by [`../reference/data-schema.md`](../reference/data-schema.md). |
 | **Error mode — `TypeError`** | If `window.jspdf` is `undefined` (CDN unreachable, blocked, offline, or `downloadPDF()` run before the script loads), the line `const { jsPDF } = window.jspdf;` [Readme.md:L216] throws a **`TypeError`**. There is **no programmatic error handling** — **no `try`/`catch`** anywhere in the function [Readme.md:L215-L237] — so the failure surfaces **only in the browser console**; the page shows no on-screen error. |
 | **Error mode — silent blank PDF** | "Download before Generate" throws **no** error, but because the rendered DOM was never populated, the saved PDF contains blank/default field values [Readme.md:L220-L224]. |
 
@@ -110,6 +110,7 @@ These are documented **expectations of the current code**, not defects to fix he
 
 - [`../dependencies.md`](../dependencies.md) — jsPDF 2.5.1 CDN integration and the CDN-availability precondition (the `window.jspdf` global contract).
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the single source of truth for the DOM-read invariant and the jsPDF-present precondition.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — the single source of truth for the fixed values behind the exported figures: the five subjects, the `500`-point denominator, and the grade thresholds.
 - [`../api-reference/script-js.md`](../api-reference/script-js.md) — the exact `downloadPDF()` signature, reads/writes, and error handling.
 - [`../architecture/data-flow.md`](../architecture/data-flow.md) — the authoritative end-to-end data flow and the function flowcharts this page mirrors.
 - [`report-rendering.md`](report-rendering.md) — **F-006**, the step that produces the rendered DOM that `downloadPDF()` reads.

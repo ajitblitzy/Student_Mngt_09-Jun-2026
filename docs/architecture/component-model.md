@@ -60,9 +60,9 @@ flowchart TD
     JS -->|"destructure window.jspdf (L216)"| JSPDF
 ```
 
-*Diagram validated against `[Readme.md:L35, L38, L81, L163-L212, L216]`.*
+*Diagram validated against `[Readme.md:L35]`, `[Readme.md:L38]`, `[Readme.md:L81]`, `[Readme.md:L163-L212]`, `[Readme.md:L216]`.*
 
-The three load directives that establish the markup's outgoing relationships are quoted verbatim from the `<head>` and end-of-`<body>` of the markup `[Readme.md:L35, L38, L81]`:
+The three load directives that establish the markup's outgoing relationships are quoted verbatim from the `<head>` and end-of-`<body>` of the markup `[Readme.md:L35]`, `[Readme.md:L38]`, `[Readme.md:L81]`:
 
 ```html
 <link rel="stylesheet" href="style.css">
@@ -78,6 +78,8 @@ The three load directives that establish the markup's outgoing relationships are
 - [`../api-reference/html-structure.md`](../api-reference/html-structure.md) — DOM element / ID reference.
 - [`../api-reference/css-reference.md`](../api-reference/css-reference.md) — selector / style reference.
 - [`../dependencies.md`](../dependencies.md) — jsPDF integration contract and CDN-availability precondition.
+- [`../reference/data-schema.md`](../reference/data-schema.md) — **single source of truth** for fixed values (the five subjects, the per-subject maximum, the `500`-point denominator, and the grade thresholds); this page describes component topology, while those values remain authoritative there.
+- [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — **single source of truth** for invariants, preconditions, and postconditions; the components' behavioral expectations are defined there rather than restated here.
 - [`overview.md`](overview.md) — system context and high-level architecture.
 - [`data-flow.md`](data-flow.md) — runtime data flow across the components.
 - [`../index.md`](../index.md) — back to the Documentation Hub.
