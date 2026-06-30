@@ -16,6 +16,8 @@ All behavior described here is extracted from the `generateReport()` logic embed
 - **DOM write** of the final grade to `#grade`: [Readme.md:L212]
 - **Upstream input** — the `percentage` value that drives the cascade: [Readme.md:L192]
 
+> The grade cascade is part of `generateReport()`; for its full signature and complete list of DOM reads/writes, see the function reference in [`../api-reference/script-js.md`](../api-reference/script-js.md).
+
 ---
 
 ## F-005 Grade Assignment
@@ -127,4 +129,5 @@ flowchart TD
 - [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) — the determinism guarantee and the default-`'F'` invariant.
 - [`computation.md`](computation.md) — F-004, the upstream `percentage` that drives the cascade.
 - [`report-rendering.md`](report-rendering.md) — F-006, where the grade is written to the rendered DOM at `#grade`.
+- [`../api-reference/script-js.md`](../api-reference/script-js.md) — exact signature and DOM writes for `generateReport()`, which contains the grade cascade.
 - [`../index.md`](../index.md) — back to the Documentation Hub.
