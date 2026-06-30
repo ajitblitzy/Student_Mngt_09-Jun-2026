@@ -10,8 +10,8 @@ This guide documents the **Data Entry** functional layer of the Student Report G
 
 | Concern | Embedded source | Citation |
 |---|---|---|
-| Form input markup (identity + marks) | `index.html` | [Readme.md:L46-L53] |
-| Logic that reads the inputs | `script.js` → `generateReport()` | [Readme.md:L162-L172] |
+| Form input markup (identity + marks) | `index.html` | [Readme.md:L61-L68] |
+| Logic that reads the inputs | `script.js` → `generateReport()` | [Readme.md:L177-L187] |
 
 > The entire application — `index.html`, `style.css`, and `script.js` — is embedded as fenced code blocks inside `Readme.md`; the standalone files implied by the README project tree do not physically exist, so `Readme.md` is the sole source of truth.
 
@@ -19,14 +19,14 @@ This guide documents the **Data Entry** functional layer of the Student Report G
 
 ## F-001 Identity Capture
 
-F-001 captures the student's **identity**: a name and a roll number. The markup declares two `<input type="text">` fields — `#studentName` [Readme.md:L46] and `#rollNumber` [Readme.md:L47] — inside the form section [Readme.md:L46-L47]:
+F-001 captures the student's **identity**: a name and a roll number. The markup declares two `<input type="text">` fields — `#studentName` [Readme.md:L61] and `#rollNumber` [Readme.md:L62] — inside the form section [Readme.md:L61-L62]:
 
 ```html
 <input type="text" id="studentName" placeholder="Student Name">
 <input type="text" id="rollNumber" placeholder="Roll Number">
 ```
 
-When the user clicks **Generate Report**, `generateReport()` reads both fields as **raw strings** through the `.value` property [Readme.md:L163-L164]:
+When the user clicks **Generate Report**, `generateReport()` reads both fields as **raw strings** through the `.value` property [Readme.md:L178-L179]:
 
 ```javascript
 const name = document.getElementById('studentName').value;
@@ -39,7 +39,7 @@ These identity values are used **verbatim** — there is no `parseInt`, no trimm
 
 ## F-002 Marks Entry
 
-F-002 captures the marks for the five fixed subjects. The markup declares five `<input type="number">` fields — `#maths`, `#science`, `#english`, `#history`, and `#computer`, in this source order [Readme.md:L49-L53]:
+F-002 captures the marks for the five fixed subjects. The markup declares five `<input type="number">` fields — `#maths`, `#science`, `#english`, `#history`, and `#computer`, in this source order [Readme.md:L64-L68]:
 
 ```html
 <input type="number" id="maths" placeholder="Maths Marks">
@@ -49,7 +49,7 @@ F-002 captures the marks for the five fixed subjects. The markup declares five `
 <input type="number" id="computer" placeholder="Computer Marks">
 ```
 
-`generateReport()` reads each field into a `subjects` object [Readme.md:L166-L172], coercing every value with the **no-NaN guard** `parseInt(document.getElementById('<id>').value || 0)`. The `Maths` entry below is representative; the other four subjects follow the identical pattern [Readme.md:L167]:
+`generateReport()` reads each field into a `subjects` object [Readme.md:L181-L187], coercing every value with the **no-NaN guard** `parseInt(document.getElementById('<id>').value || 0)`. The `Maths` entry below is representative; the other four subjects follow the identical pattern [Readme.md:L182]:
 
 ```javascript
 Maths: parseInt(document.getElementById('maths').value || 0),
@@ -75,14 +75,14 @@ This section is the explicit **expectation from the code** for the Data Entry st
 
 | Aspect | Expectation | Source |
 |---|---|---|
-| **Inputs** | Two identity strings (`#studentName`, `#rollNumber`) plus five numeric marks (`#maths`, `#science`, `#english`, `#history`, `#computer`). | [Readme.md:L46-L53] |
-| **Acceptance (no validation)** | All inputs are accepted **as-is**. Identity strings are not validated, trimmed, or required. | [Readme.md:L163-L164] |
-| **Marks not range-checked** | Marks are read and coerced to numbers but are never range-checked. | [Readme.md:L166-L172] |
-| **Blank/falsy marks → `0`** | A blank or otherwise **falsy** `.value` defaults to `0` *before* `parseInt` runs (the no-NaN guard), so an empty field contributes `0` rather than `NaN`. There is no validation, trimming, or clamping — a **truthy non-numeric** `.value` (e.g. `"abc"`) is **not** guarded and would `parseInt` to `NaN`. | [Readme.md:L167-L171] |
-| **No clamping** | Negative values and values greater than `100` are accepted **unchanged**; there is no min/max enforcement. The *intended* per-subject maximum of `100` (see [`../reference/data-schema.md`](../reference/data-schema.md)) is **not** enforced. | [Readme.md:L166-L172] |
-| **Preconditions** | The seven input element IDs must exist in the DOM exactly as spelled (see [`../api-reference/html-structure.md`](../api-reference/html-structure.md)); a missing ID would cause a `null` read and a `TypeError` downstream. | [Readme.md:L46-L53], [Readme.md:L162-L172] |
-| **Side effects** | None in the data-entry step itself — values are only **read** here; the table rebuild, computation, and rendering happen later in `generateReport()`. | [Readme.md:L162-L172] |
-| **Outputs (postcondition)** | `name` and `roll` captured as strings, and a `subjects` object with five entries — each the result of `parseInt(.value || 0)` — ready for computation. | [Readme.md:L163-L172] |
+| **Inputs** | Two identity strings (`#studentName`, `#rollNumber`) plus five numeric marks (`#maths`, `#science`, `#english`, `#history`, `#computer`). | [Readme.md:L61-L68] |
+| **Acceptance (no validation)** | All inputs are accepted **as-is**. Identity strings are not validated, trimmed, or required. | [Readme.md:L178-L179] |
+| **Marks not range-checked** | Marks are read and coerced to numbers but are never range-checked. | [Readme.md:L181-L187] |
+| **Blank/falsy marks → `0`** | A blank or otherwise **falsy** `.value` defaults to `0` *before* `parseInt` runs (the no-NaN guard), so an empty field contributes `0` rather than `NaN`. There is no validation, trimming, or clamping — a **truthy non-numeric** `.value` (e.g. `"abc"`) is **not** guarded and would `parseInt` to `NaN`. | [Readme.md:L182-L186] |
+| **No clamping** | Negative values and values greater than `100` are accepted **unchanged**; there is no min/max enforcement. The *intended* per-subject maximum of `100` (see [`../reference/data-schema.md`](../reference/data-schema.md)) is **not** enforced. | [Readme.md:L181-L187] |
+| **Preconditions** | The seven input element IDs must exist in the DOM exactly as spelled (see [`../api-reference/html-structure.md`](../api-reference/html-structure.md)); a missing ID would cause a `null` read and a `TypeError` downstream. | [Readme.md:L61-L68], [Readme.md:L177-L187] |
+| **Side effects** | None in the data-entry step itself — values are only **read** here; the table rebuild, computation, and rendering happen later in `generateReport()`. | [Readme.md:L177-L187] |
+| **Outputs (postcondition)** | `name` and `roll` captured as strings, and a `subjects` object with five entries — each the result of `parseInt(.value || 0)` — ready for computation. | [Readme.md:L178-L187] |
 
 **Most commonly misunderstood point:** the `|| 0` guard's scope is the `.value` only. It prevents `NaN` from blank fields but performs **no** range validation — negatives and values above `100` pass through untouched. The full invariant catalog, including this no-NaN guard, is the single source of truth in [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md).
 
@@ -98,4 +98,4 @@ This section is the explicit **expectation from the code** for the Data Entry st
 
 ---
 
-*Maintenance note: this guide is derived from the application source embedded in `Readme.md` [Readme.md:L46-L172]. If that embedded code changes, update the cited line ranges and contract statements here so the documentation stays accurate.*
+*Maintenance note: this guide is derived from the application source embedded in `Readme.md` [Readme.md:L61-L187]. If that embedded code changes, update the cited line ranges and contract statements here so the documentation stays accurate.*

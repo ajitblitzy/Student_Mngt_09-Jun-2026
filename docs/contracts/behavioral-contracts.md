@@ -14,10 +14,10 @@ All content below is **code-grounded**: every technical claim carries an inline 
 
 All contracts on this page are extracted from the behavioral logic embedded in `Readme.md`:
 
-- **Application logic** — the embedded `script.js` block [Readme.md:L161-L238]
-- **`generateReport()`** — builds and renders the report card [Readme.md:L162-L213]
-- **`downloadPDF()`** — exports the rendered report card to a PDF [Readme.md:L215-L237]
-- **jsPDF dependency** — the CDN `<script>` tag that populates `window.jspdf` [Readme.md:L38]
+- **Application logic** — the embedded `script.js` block [Readme.md:L176-L253]
+- **`generateReport()`** — builds and renders the report card [Readme.md:L177-L228]
+- **`downloadPDF()`** — exports the rendered report card to a PDF [Readme.md:L230-L252]
+- **jsPDF dependency** — the CDN `<script>` tag that populates `window.jspdf` [Readme.md:L53]
 
 ---
 
@@ -27,26 +27,26 @@ The five behavioral guarantees below hold on every run, by construction of the c
 
 | # | Invariant | Guarantee (one line) | Source |
 | --- | --- | --- | --- |
-| 1 | Rebuild-from-scratch rendering | The marks table is cleared and rebuilt every run, yielding exactly five rows | [Readme.md:L176-L177] |
-| 2 | No-NaN guard | Blank/falsy `.value` defaults to `0` before `parseInt`, preventing blank-field `NaN`; it is **not** general validation — a truthy non-numeric `.value` can still parse to `NaN` | [Readme.md:L167-L171] |
-| 3 | Fixed 2-decimal percentage precision | The *displayed* percentage is a 2-decimal string via `.toFixed(2)` | [Readme.md:L211] |
-| 4 | Default grade `'F'` | `grade` starts at `'F'` and is retained when every threshold test fails | [Readme.md:L194] |
-| 5 | DOM-read invariant | `downloadPDF()` reads the rendered DOM, not the form inputs | [Readme.md:L220-L224] |
+| 1 | Rebuild-from-scratch rendering | The marks table is cleared and rebuilt every run, yielding exactly five rows | [Readme.md:L191-L192] |
+| 2 | No-NaN guard | Blank/falsy `.value` defaults to `0` before `parseInt`, preventing blank-field `NaN`; it is **not** general validation — a truthy non-numeric `.value` can still parse to `NaN` | [Readme.md:L182-L186] |
+| 3 | Fixed 2-decimal percentage precision | The *displayed* percentage is a 2-decimal string via `.toFixed(2)` | [Readme.md:L226] |
+| 4 | Default grade `'F'` | `grade` starts at `'F'` and is retained when every threshold test fails | [Readme.md:L209] |
+| 5 | DOM-read invariant | `downloadPDF()` reads the rendered DOM, not the form inputs | [Readme.md:L235-L239] |
 
 ### 1. Rebuild-from-scratch rendering
 
-Before the per-subject loop runs, `generateReport()` fetches the marks-table body and **clears** it [Readme.md:L176-L177]:
+Before the per-subject loop runs, `generateReport()` fetches the marks-table body and **clears** it [Readme.md:L191-L192]:
 
 ```javascript
 const tableBody = document.getElementById('marksTable');
 tableBody.innerHTML = '';
 ```
 
-The loop `for (let subject in subjects)` then re-appends one `<tr>` row per subject [Readme.md:L179-L190]. Because the table is wiped first, **every** Generate Report run produces a fresh table of **exactly five rows** (one per subject) — repeated runs never accumulate stale rows. See [`../functionality/report-rendering.md`](../functionality/report-rendering.md) (**F-006**) for the rendering walkthrough.
+The loop `for (let subject in subjects)` then re-appends one `<tr>` row per subject [Readme.md:L194-L205]. Because the table is wiped first, **every** Generate Report run produces a fresh table of **exactly five rows** (one per subject) — repeated runs never accumulate stale rows. See [`../functionality/report-rendering.md`](../functionality/report-rendering.md) (**F-006**) for the rendering walkthrough.
 
 ### 2. No-NaN guard
 
-Each subject is read and coerced with `parseInt(document.getElementById('<id>').value || 0)` [Readme.md:L167-L171]:
+Each subject is read and coerced with `parseInt(document.getElementById('<id>').value || 0)` [Readme.md:L182-L186]:
 
 ```javascript
 Maths: parseInt(document.getElementById('maths').value || 0),
@@ -56,27 +56,27 @@ The `|| 0` makes a blank or otherwise falsy `.value` default to `0` **before** `
 
 ### 3. Fixed 2-decimal percentage precision
 
-The percentage written to the rendered DOM is formatted with `.toFixed(2)` [Readme.md:L211]:
+The percentage written to the rendered DOM is formatted with `.toFixed(2)` [Readme.md:L226]:
 
 ```javascript
 document.getElementById('percentage').innerText = percentage.toFixed(2);
 ```
 
-Important nuance: the internal `total` and `percentage` are full-precision JavaScript **numbers**; only the **displayed** percentage is a 2-decimal **string** produced by `.toFixed(2)`. The stored value is **not** rounded. By contrast, `total` is written to the rendered DOM **without** any formatting [Readme.md:L210]. See [`../functionality/computation.md`](../functionality/computation.md) (**F-004**) for the percentage computation.
+Important nuance: the internal `total` and `percentage` are full-precision JavaScript **numbers**; only the **displayed** percentage is a 2-decimal **string** produced by `.toFixed(2)`. The stored value is **not** rounded. By contrast, `total` is written to the rendered DOM **without** any formatting [Readme.md:L225]. See [`../functionality/computation.md`](../functionality/computation.md) (**F-004**) for the percentage computation.
 
 ### 4. Default grade `'F'`
 
-The grade variable is initialized to `'F'` before the threshold cascade runs [Readme.md:L194]:
+The grade variable is initialized to `'F'` before the threshold cascade runs [Readme.md:L209]:
 
 ```javascript
 let grade = 'F';
 ```
 
-`'F'` is **retained** whenever every `if/else-if` test fails — that is, when `percentage < 50` [Readme.md:L196-L206]. This default guarantees `grade` is never empty or `undefined`. The canonical threshold values (`≥ 90` → `A+`, … `≥ 50` → `D`) are owned by [`../reference/data-schema.md`](../reference/data-schema.md); see [`../functionality/grading.md`](../functionality/grading.md) (**F-005**) for the grade-decision flowchart.
+`'F'` is **retained** whenever every `if/else-if` test fails — that is, when `percentage < 50` [Readme.md:L211-L221]. This default guarantees `grade` is never empty or `undefined`. The canonical threshold values (`≥ 90` → `A+`, … `≥ 50` → `D`) are owned by [`../reference/data-schema.md`](../reference/data-schema.md); see [`../functionality/grading.md`](../functionality/grading.md) (**F-005**) for the grade-decision flowchart.
 
 ### 5. DOM-read invariant
 
-`downloadPDF()` reads its values from the **rendered DOM** report card (`#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade`) via `.innerText`, **not** from the **form inputs** (`#studentName`, `#rollNumber`, `#maths`, …) [Readme.md:L220-L224]:
+`downloadPDF()` reads its values from the **rendered DOM** report card (`#rName`, `#rRoll`, `#totalMarks`, `#percentage`, `#grade`) via `.innerText`, **not** from the **form inputs** (`#studentName`, `#rollNumber`, `#maths`, …) [Readme.md:L235-L239]:
 
 ```javascript
 const name = document.getElementById('rName').innerText;
@@ -92,12 +92,12 @@ These conditions must hold for the application to behave as expected. **Neither 
 
 | Precondition | Why it is required | Source |
 | --- | --- | --- |
-| **Generate Report runs before Download PDF** | `downloadPDF()` reads the **rendered DOM**, not the **form inputs** (the DOM-read invariant). If the report card was never rendered, the read values are empty/default and the PDF contains blank values. | [Readme.md:L220-L224] |
-| **`window.jspdf` is populated before `downloadPDF()`** | `downloadPDF()` destructures `const { jsPDF } = window.jspdf;`. That global is supplied by the jsPDF CDN `<script>` tag, which must have loaded first. | [Readme.md:L38], [Readme.md:L216] |
+| **Generate Report runs before Download PDF** | `downloadPDF()` reads the **rendered DOM**, not the **form inputs** (the DOM-read invariant). If the report card was never rendered, the read values are empty/default and the PDF contains blank values. | [Readme.md:L235-L239] |
+| **`window.jspdf` is populated before `downloadPDF()`** | `downloadPDF()` destructures `const { jsPDF } = window.jspdf;`. That global is supplied by the jsPDF CDN `<script>` tag, which must have loaded first. | [Readme.md:L53], [Readme.md:L231] |
 
-**Ordering.** `generateReport()` (the **Generate Report** button) must run before `downloadPDF()` (the **Download PDF** button). There is **no code guard** enforcing this order — it is a direct consequence of the DOM-read invariant [Readme.md:L220-L224]. If a user clicks Download PDF first, no error is thrown, but the PDF is populated from the still-empty rendered DOM.
+**Ordering.** `generateReport()` (the **Generate Report** button) must run before `downloadPDF()` (the **Download PDF** button). There is **no code guard** enforcing this order — it is a direct consequence of the DOM-read invariant [Readme.md:L235-L239]. If a user clicks Download PDF first, no error is thrown, but the PDF is populated from the still-empty rendered DOM.
 
-**jsPDF present.** The global `window.jspdf` must be populated by the CDN script [Readme.md:L38] before `downloadPDF()` destructures it [Readme.md:L216]:
+**jsPDF present.** The global `window.jspdf` must be populated by the CDN script [Readme.md:L53] before `downloadPDF()` destructures it [Readme.md:L231]:
 
 ```javascript
 const { jsPDF } = window.jspdf;
@@ -111,31 +111,31 @@ This requires the cdnjs script to have loaded successfully (i.e., internet acces
 
 | After … | Guaranteed result | Source |
 | --- | --- | --- |
-| `generateReport()` | The report card is populated — `#rName`, `#rRoll`, `#totalMarks`, `#percentage`, and `#grade` are written — and the marks table holds exactly five rows. | [Readme.md:L208-L212], [Readme.md:L179-L190] |
-| `downloadPDF()` | A PDF is generated and downloaded, named `${name}_Report.pdf`, populated from the rendered DOM values. | [Readme.md:L236], [Readme.md:L220-L234] |
+| `generateReport()` | The report card is populated — `#rName`, `#rRoll`, `#totalMarks`, `#percentage`, and `#grade` are written — and the marks table holds exactly five rows. | [Readme.md:L223-L227], [Readme.md:L194-L205] |
+| `downloadPDF()` | A PDF is generated and downloaded, named `${name}_Report.pdf`, populated from the rendered DOM values. | [Readme.md:L251], [Readme.md:L235-L249] |
 
-- **After `generateReport()`** — the five report-card fields are written to the rendered DOM [Readme.md:L208-L212], and the marks table contains exactly five rows, one per subject [Readme.md:L179-L190].
-- **After `downloadPDF()`** — the browser saves a PDF named `${name}_Report.pdf` [Readme.md:L236], where `name` is read from the rendered `#rName`; all five fields in the PDF are taken from the rendered DOM [Readme.md:L220-L234].
+- **After `generateReport()`** — the five report-card fields are written to the rendered DOM [Readme.md:L223-L227], and the marks table contains exactly five rows, one per subject [Readme.md:L194-L205].
+- **After `downloadPDF()`** — the browser saves a PDF named `${name}_Report.pdf` [Readme.md:L251], where `name` is read from the rendered `#rName`; all five fields in the PDF are taken from the rendered DOM [Readme.md:L235-L249].
 
 ---
 
 ## Error Modes
 
-- **`TypeError` when `window.jspdf` is `undefined`.** If the jsPDF CDN script is unreachable, blocked, or has not yet loaded (for example, `downloadPDF()` runs offline or before the `<script>` tag executes), the destructuring line throws a `TypeError` — *cannot destructure property `jsPDF` of `undefined`* [Readme.md:L216]:
+- **`TypeError` when `window.jspdf` is `undefined`.** If the jsPDF CDN script is unreachable, blocked, or has not yet loaded (for example, `downloadPDF()` runs offline or before the `<script>` tag executes), the destructuring line throws a `TypeError` — *cannot destructure property `jsPDF` of `undefined`* [Readme.md:L231]:
 
 ```javascript
 const { jsPDF } = window.jspdf;
 ```
 
-- **No programmatic error handling anywhere.** There is **no** `try/catch` block and **no** input validation beyond the `|| 0` no-NaN guard anywhere in the code [Readme.md:L161-L238]. Any failure surfaces only in the browser console; nothing is caught, retried, or reported to the user.
-- **"Download before Generate" produces a blank PDF, not an error.** Because of the DOM-read invariant, clicking Download PDF before Generate Report throws **no** error — but the rendered DOM was never populated, so the saved PDF contains blank/default field values [Readme.md:L220-L224].
+- **No programmatic error handling anywhere.** There is **no** `try/catch` block and **no** input validation beyond the `|| 0` no-NaN guard anywhere in the code [Readme.md:L176-L253]. Any failure surfaces only in the browser console; nothing is caught, retried, or reported to the user.
+- **"Download before Generate" produces a blank PDF, not an error.** Because of the DOM-read invariant, clicking Download PDF before Generate Report throws **no** error — but the rendered DOM was never populated, so the saved PDF contains blank/default field values [Readme.md:L235-L239].
 
 ---
 
 ## Determinism Guarantee
 
-- **`generateReport()` is a pure function of its inputs.** Given identical **form inputs**, it always produces identical report-card output. The logic reads only the form inputs and writes only to the rendered DOM — there is no randomness, no use of time/`Date`, no persistence, and no external reads anywhere in `generateReport()` [Readme.md:L162-L213].
-- **Grade assignment is total and mutually exclusive.** Every `percentage` maps to **exactly one** grade. The ordered `if/else-if` cascade [Readme.md:L196-L206] tests the highest band first, so each band's upper bound (`< 90`, `< 80`, …) is an **implicit** consequence of the ordering rather than an explicit comparison; the `'F'` default [Readme.md:L194] catches every `percentage < 50`. There are no gaps and no overlaps — the mapping is total. The canonical threshold values live in [`../reference/data-schema.md`](../reference/data-schema.md), and the grade-decision flowchart is in [`../functionality/grading.md`](../functionality/grading.md).
+- **`generateReport()` is a pure function of its inputs.** Given identical **form inputs**, it always produces identical report-card output. The logic reads only the form inputs and writes only to the rendered DOM — there is no randomness, no use of time/`Date`, no persistence, and no external reads anywhere in `generateReport()` [Readme.md:L177-L228].
+- **Grade assignment is total and mutually exclusive.** Every `percentage` maps to **exactly one** grade. The ordered `if/else-if` cascade [Readme.md:L211-L221] tests the highest band first, so each band's upper bound (`< 90`, `< 80`, …) is an **implicit** consequence of the ordering rather than an explicit comparison; the `'F'` default [Readme.md:L209] catches every `percentage < 50`. There are no gaps and no overlaps — the mapping is total. The canonical threshold values live in [`../reference/data-schema.md`](../reference/data-schema.md), and the grade-decision flowchart is in [`../functionality/grading.md`](../functionality/grading.md).
 
 ---
 
@@ -168,4 +168,4 @@ flowchart TD
 
 ---
 
-*Maintenance note: this document is derived from the application source embedded in `Readme.md` [Readme.md:L161-L238]. If that embedded code changes, update the cited line ranges and contract statements here so this single source of truth stays accurate.*
+*Maintenance note: this document is derived from the application source embedded in `Readme.md` [Readme.md:L176-L253]. If that embedded code changes, update the cited line ranges and contract statements here so this single source of truth stays accurate.*

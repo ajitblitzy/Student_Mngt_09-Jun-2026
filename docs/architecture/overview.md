@@ -4,7 +4,7 @@
 
 This page gives the **high-level system context** for the **Student Report Generator** — what the application is, the architectural posture it adopts, the capabilities it delivers, and the criteria by which it is judged correct. It is the architectural entry point that the deeper [`component-model.md`](component-model.md) and [`data-flow.md`](data-flow.md) documents drill into. All content on this page is **code-grounded**: every technical claim carries an inline `[Readme.md:Lx-Ly]` citation pointing at the application source embedded in the repository-root `Readme.md`. This is a documentation-only reference and does not modify any source code.
 
-**Source Location:** `[Readme.md:L1-L21]` — the project Overview and structure; the full embedded application source (markup, styling, and logic) resides at `[Readme.md:L27-L238]`.
+**Source Location:** `[Readme.md:L1-L36]` — the project Overview and structure; the full embedded application source (markup, styling, and logic) resides at `[Readme.md:L42-L253]`.
 
 ---
 
@@ -12,9 +12,9 @@ This page gives the **high-level system context** for the **Student Report Gener
 
 The Student Report Generator is a small **educational/utility tool**. It lets a user enter student details, calculate total marks and percentage, generate a formatted on-screen report, and export that report as a PDF file `[Readme.md:L4-L8]`.
 
-Architecturally, the application is deliberately minimal. It has **no backend, no persistence, and no build pipeline**; it is **zero-install** and runs entirely client-side — a user simply opens `index.html` in a browser, enters details, and clicks the action buttons `[Readme.md:L255-L268]`. The technology stack is plain HTML, CSS, and JavaScript, plus the jsPDF library `[Readme.md:L255-L268]`.
+Architecturally, the application is deliberately minimal. It has **no backend, no persistence, and no build pipeline**; it is **zero-install** and runs entirely client-side — a user simply opens `index.html` in a browser, enters details, and clicks the action buttons `[Readme.md:L270-L283]`. The technology stack is plain HTML, CSS, and JavaScript, plus the jsPDF library `[Readme.md:L270-L283]`.
 
-The application's **only external dependency** is **jsPDF 2.5.1**, loaded as a UMD script from the **cdnjs** (Cloudflare) CDN `[Readme.md:L38]`. Because that library is fetched over the network when the page loads, the PDF-export capability requires **internet access** at load time. The integration contract and the CDN-availability precondition are documented in [`../dependencies.md`](../dependencies.md) and are not duplicated here.
+The application's **only external dependency** is **jsPDF 2.5.1**, loaded as a UMD script from the **cdnjs** (Cloudflare) CDN `[Readme.md:L53]`. Because that library is fetched over the network when the page loads, the PDF-export capability requires **internet access** at load time. The integration contract and the CDN-availability precondition are documented in [`../dependencies.md`](../dependencies.md) and are not duplicated here.
 
 ---
 
@@ -42,10 +42,10 @@ Each capability maps to one or more features in the application's canonical feat
 
 The system is working correctly when two outputs are produced:
 
-1. A **correct on-screen report** — the student name, roll number, a per-subject marks table, the total, the percentage rendered to **two decimal places**, and the assigned grade — written into the rendered report-card DOM `[Readme.md:L177-L212]`.
-2. A **downloadable PDF that matches the rendered values**, saved as `<name>_Report.pdf` `[Readme.md:L215-L237]`.
+1. A **correct on-screen report** — the student name, roll number, a per-subject marks table, the total, the percentage rendered to **two decimal places**, and the assigned grade — written into the rendered report-card DOM `[Readme.md:L192-L227]`.
+2. A **downloadable PDF that matches the rendered values**, saved as `<name>_Report.pdf` `[Readme.md:L230-L252]`.
 
-By construction, the PDF mirrors the on-screen report: `downloadPDF()` builds the document by reading the **rendered DOM**, not the original **form inputs** `[Readme.md:L220-L224]`. This **DOM-read invariant** — and the ordering precondition it implies (Generate Report must run before Download PDF) — is defined authoritatively in [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) and traced step-by-step in [`data-flow.md`](data-flow.md); it is referenced here, not duplicated.
+By construction, the PDF mirrors the on-screen report: `downloadPDF()` builds the document by reading the **rendered DOM**, not the original **form inputs** `[Readme.md:L235-L239]`. This **DOM-read invariant** — and the ordering precondition it implies (Generate Report must run before Download PDF) — is defined authoritatively in [`../contracts/behavioral-contracts.md`](../contracts/behavioral-contracts.md) and traced step-by-step in [`data-flow.md`](data-flow.md); it is referenced here, not duplicated.
 
 ---
 
@@ -65,15 +65,15 @@ flowchart LR
     CDN["cdnjs<br/>jsPDF 2.5.1 UMD"]
     PDF["PDF artifact<br/>name_Report.pdf"]
     User -->|"enter details, click buttons"| HTML
-    HTML -->|"loads stylesheet (L35)"| CSS
-    HTML -->|"loads logic (L81)"| JS
-    HTML -->|"loads library (L38)"| CDN
-    CDN -.->|"window.jspdf (L216)"| JS
-    JS -->|"doc.save (L236)"| PDF
+    HTML -->|"loads stylesheet (L50)"| CSS
+    HTML -->|"loads logic (L96)"| JS
+    HTML -->|"loads library (L53)"| CDN
+    CDN -.->|"window.jspdf (L231)"| JS
+    JS -->|"doc.save (L251)"| PDF
     PDF -->|"downloaded"| User
 ```
 
-*High-level architecture, validated against `[Readme.md:L35]`, `[Readme.md:L38]`, `[Readme.md:L81]`, `[Readme.md:L216]`, `[Readme.md:L236]`.*
+*High-level architecture, validated against `[Readme.md:L50]`, `[Readme.md:L53]`, `[Readme.md:L96]`, `[Readme.md:L231]`, `[Readme.md:L251]`.*
 
 ---
 
@@ -89,4 +89,4 @@ This page is the hub of the architecture set; each document below links back to 
 
 ---
 
-*Maintenance note: this page is derived from the application source embedded in `Readme.md` `[Readme.md:L1-L238]`. If that embedded source changes, update the cited line ranges, the prose, and the architecture diagram on this page so this overview stays accurate.*
+*Maintenance note: this page is derived from the application source embedded in `Readme.md` `[Readme.md:L1-L253]`. If that embedded source changes, update the cited line ranges, the prose, and the architecture diagram on this page so this overview stays accurate.*

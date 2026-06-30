@@ -6,7 +6,7 @@ Welcome to the documentation for the **Student Report Generator** — a zero-ins
 
 This hub is the entry point to **code-grounded documentation**: every page is extracted directly from the application source, and every technical claim carries an inline citation of the form `[Readme.md:Lx-Ly]`. The complete application — `index.html`, `style.css`, and `script.js` — is embedded as fenced code blocks inside the repository-root `Readme.md`, which is therefore the single source of truth for all content here.
 
-The application itself is a **zero-install, browser-only static front-end** built with HTML, CSS, and vanilla JavaScript, using **jsPDF** (loaded from a CDN) for PDF export [Readme.md:L255-L260]. There is no backend, no build step, and no persistence: a reader opens `index.html` in a modern browser and the app runs immediately [Readme.md:L262-L268].
+The application itself is a **zero-install, browser-only static front-end** built with HTML, CSS, and vanilla JavaScript, using **jsPDF** (loaded from a CDN) for PDF export [Readme.md:L270-L275]. There is no backend, no build step, and no persistence: a reader opens `index.html` in a modern browser and the app runs immediately [Readme.md:L277-L283].
 
 This documentation set was authored to satisfy two explicit goals:
 
@@ -21,23 +21,23 @@ The organizing principle is **separation by functionality**: rather than one lar
 
 | Layer | Feature ID | Feature | Primary Doc |
 |---|---|---|---|
-| Data Entry | F-001 | Identity Capture (name, roll) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L46-L47], [Readme.md:L162-L164] |
-| Data Entry | F-002 | Marks Entry (5 subjects) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L49-L53], [Readme.md:L166-L172] |
-| Computation | F-003 | Total Aggregation | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L174-L190] |
-| Computation | F-004 | Percentage | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L192], [Readme.md:L211] |
-| Computation | F-005 | Grade Assignment | [`functionality/grading.md`](functionality/grading.md) [Readme.md:L194-L206] |
-| Presentation | F-006 | On-Screen Report Render | [`functionality/report-rendering.md`](functionality/report-rendering.md) [Readme.md:L59-L78], [Readme.md:L176-L212] |
-| Export | F-007 | PDF Export | [`functionality/pdf-export.md`](functionality/pdf-export.md) [Readme.md:L215-L237] |
-| Presentation | F-008 | Static Visual Styling | [`functionality/styling.md`](functionality/styling.md) [Readme.md:L91-L155] |
+| Data Entry | F-001 | Identity Capture (name, roll) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L61-L62], [Readme.md:L177-L179] |
+| Data Entry | F-002 | Marks Entry (5 subjects) | [`functionality/data-entry.md`](functionality/data-entry.md) [Readme.md:L64-L68], [Readme.md:L181-L187] |
+| Computation | F-003 | Total Aggregation | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L189-L205] |
+| Computation | F-004 | Percentage | [`functionality/computation.md`](functionality/computation.md) [Readme.md:L207], [Readme.md:L226] |
+| Computation | F-005 | Grade Assignment | [`functionality/grading.md`](functionality/grading.md) [Readme.md:L209-L221] |
+| Presentation | F-006 | On-Screen Report Render | [`functionality/report-rendering.md`](functionality/report-rendering.md) [Readme.md:L74-L93], [Readme.md:L191-L227] |
+| Export | F-007 | PDF Export | [`functionality/pdf-export.md`](functionality/pdf-export.md) [Readme.md:L230-L252] |
+| Presentation | F-008 | Static Visual Styling | [`functionality/styling.md`](functionality/styling.md) [Readme.md:L106-L170] |
 
 The diagram below maps the three source components — `index.html` (markup), `style.css` (styling), and `script.js` (logic) — plus the **jsPDF** CDN dependency onto these functional layers. The detailed component and flow diagrams live under [`architecture/`](architecture/overview.md).
 
 ```mermaid
 flowchart LR
-    HTML["index.html (markup)<br/>L27-L85"]
-    CSS["style.css (styling)<br/>L91-L155"]
-    JS["script.js (logic)<br/>L161-L238"]
-    DEP["jsPDF 2.5.1 — CDN<br/>L38"]
+    HTML["index.html (markup)<br/>L42-L100"]
+    CSS["style.css (styling)<br/>L106-L170"]
+    JS["script.js (logic)<br/>L176-L253"]
+    DEP["jsPDF 2.5.1 — CDN<br/>L53"]
 
     HTML --> DE["Data Entry<br/>F-001, F-002"]
     JS --> DE
@@ -68,30 +68,30 @@ Every document in the `docs/` tree is listed below, grouped for reader-friendly 
 
 ### 3. Functionality (clearly separated, F-001 … F-008)
 
-- [`functionality/data-entry.md`](functionality/data-entry.md) — **F-001 Identity Capture** + **F-002 Marks Entry**: reading the **form inputs**, with the no-NaN guard `parseInt(document.getElementById('maths').value || 0)` — a blank/falsy `.value` defaults to `0` before parsing, and no general invalid-input validation is performed [Readme.md:L166-L172].
-- [`functionality/computation.md`](functionality/computation.md) — **F-003 Total Aggregation** + **F-004 Percentage**: the running total and `(total / 500) * 100` rendered with `.toFixed(2)` [Readme.md:L192], [Readme.md:L211].
-- [`functionality/grading.md`](functionality/grading.md) — **F-005 Grade Assignment**: the threshold cascade with a default of `'F'`, plus a grade-decision flowchart [Readme.md:L194-L206].
-- [`functionality/report-rendering.md`](functionality/report-rendering.md) — **F-006 On-Screen Report Render**: the **rebuild-from-scratch** marks-table invariant and the DOM writes back to the report card [Readme.md:L176-L212].
-- [`functionality/pdf-export.md`](functionality/pdf-export.md) — **F-007 PDF Export**: the **DOM-read invariant** (reads the rendered report, not the form inputs) and the `${name}_Report.pdf` filename [Readme.md:L215-L237].
-- [`functionality/styling.md`](functionality/styling.md) — **F-008 Static Visual Styling**: layout, color palette, and table styling; viewport-only responsiveness (no `@media` rules) [Readme.md:L91-L155].
+- [`functionality/data-entry.md`](functionality/data-entry.md) — **F-001 Identity Capture** + **F-002 Marks Entry**: reading the **form inputs**, with the no-NaN guard `parseInt(document.getElementById('maths').value || 0)` — a blank/falsy `.value` defaults to `0` before parsing, and no general invalid-input validation is performed [Readme.md:L181-L187].
+- [`functionality/computation.md`](functionality/computation.md) — **F-003 Total Aggregation** + **F-004 Percentage**: the running total and `(total / 500) * 100` rendered with `.toFixed(2)` [Readme.md:L207], [Readme.md:L226].
+- [`functionality/grading.md`](functionality/grading.md) — **F-005 Grade Assignment**: the threshold cascade with a default of `'F'`, plus a grade-decision flowchart [Readme.md:L209-L221].
+- [`functionality/report-rendering.md`](functionality/report-rendering.md) — **F-006 On-Screen Report Render**: the **rebuild-from-scratch** marks-table invariant and the DOM writes back to the report card [Readme.md:L191-L227].
+- [`functionality/pdf-export.md`](functionality/pdf-export.md) — **F-007 PDF Export**: the **DOM-read invariant** (reads the rendered report, not the form inputs) and the `${name}_Report.pdf` filename [Readme.md:L230-L252].
+- [`functionality/styling.md`](functionality/styling.md) — **F-008 Static Visual Styling**: layout, color palette, and table styling; viewport-only responsiveness (no `@media` rules) [Readme.md:L106-L170].
 
 ### 4. API Reference
 
-- [`api-reference/script-js.md`](api-reference/script-js.md) — function reference for `generateReport()` and `downloadPDF()`: parameters, returns, DOM reads/writes, side effects, and errors [Readme.md:L161-L238].
-- [`api-reference/html-structure.md`](api-reference/html-structure.md) — the DOM element/ID reference table and how the buttons are wired to the functions [Readme.md:L27-L85].
-- [`api-reference/css-reference.md`](api-reference/css-reference.md) — the selector/style reference for `style.css` [Readme.md:L91-L155].
+- [`api-reference/script-js.md`](api-reference/script-js.md) — function reference for `generateReport()` and `downloadPDF()`: parameters, returns, DOM reads/writes, side effects, and errors [Readme.md:L176-L253].
+- [`api-reference/html-structure.md`](api-reference/html-structure.md) — the DOM element/ID reference table and how the buttons are wired to the functions [Readme.md:L42-L100].
+- [`api-reference/css-reference.md`](api-reference/css-reference.md) — the selector/style reference for `style.css` [Readme.md:L106-L170].
 
 ### 5. Reference Data
 
-- [`reference/data-schema.md`](reference/data-schema.md) — **single source of truth** for fixed values: the five subjects, the per-subject maximum of `100`, the `500`-point total, and the six grade thresholds [Readme.md:L166-L206].
+- [`reference/data-schema.md`](reference/data-schema.md) — **single source of truth** for fixed values: the five subjects, the per-subject maximum of `100`, the `500`-point total, and the six grade thresholds [Readme.md:L181-L221].
 
 ### 6. Behavioral Contracts
 
-- [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) — **single source of truth** for invariants, preconditions, and postconditions — i.e., **the expectation from the code** (rebuild-from-scratch, the no-NaN guard, `.toFixed(2)` precision, the default `'F'` grade, and the DOM-read invariant) [Readme.md:L161-L238].
+- [`contracts/behavioral-contracts.md`](contracts/behavioral-contracts.md) — **single source of truth** for invariants, preconditions, and postconditions — i.e., **the expectation from the code** (rebuild-from-scratch, the no-NaN guard, `.toFixed(2)` precision, the default `'F'` grade, and the DOM-read invariant) [Readme.md:L176-L253].
 
 ### 7. Dependencies
 
-- [`dependencies.md`](dependencies.md) — the jsPDF **2.5.1** integration via cdnjs, the `window.jspdf` global contract, and the CDN-availability precondition [Readme.md:L38].
+- [`dependencies.md`](dependencies.md) — the jsPDF **2.5.1** integration via cdnjs, the `window.jspdf` global contract, and the CDN-availability precondition [Readme.md:L53].
 
 ---
 
@@ -117,16 +117,16 @@ Documents that discuss those fixed values or invariants **link to** these author
 
 ## Source Files & Citations
 
-The project's three source files are advertised as standalone files in the README project tree [Readme.md:L14-L21], but they currently exist **only embedded** as fenced code blocks inside the repository-root `Readme.md`. Consequently, **all line-range citations throughout this documentation refer to `Readme.md`**:
+The project's three source files are advertised as standalone files in the README project tree [Readme.md:L29-L36], but they currently exist **only embedded** as fenced code blocks inside the repository-root `Readme.md`. Consequently, **all line-range citations throughout this documentation refer to `Readme.md`**:
 
 | Source component | Embedded location |
 |---|---|
-| Markup — `index.html` | [Readme.md:L27-L85] |
-| Styles — `style.css` | [Readme.md:L91-L155] |
-| Logic — `script.js` | [Readme.md:L161-L238] |
+| Markup — `index.html` | [Readme.md:L42-L100] |
+| Styles — `style.css` | [Readme.md:L106-L170] |
+| Logic — `script.js` | [Readme.md:L176-L253] |
 
-Citations use the inline form `[Readme.md:Lx-Ly]`, and code excerpts are kept short and verbatim, matching the conventions of the root `Readme.md` [Readme.md:L1-L21].
+Citations use the inline form `[Readme.md:Lx-Ly]`, and code excerpts are kept short and verbatim, matching the conventions of the root `Readme.md` [Readme.md:L1-L36].
 
 ---
 
-*Maintenance note: this hub is derived from the application source embedded in `Readme.md` [Readme.md:L1-L281]. If documents are added to or removed from the `docs/` tree, or if the embedded code changes, update this master table of contents and the cited line ranges so the documentation stays accurate.*
+*Maintenance note: this hub is derived from the application source embedded in `Readme.md` [Readme.md:L1-L296]. If documents are added to or removed from the `docs/` tree, or if the embedded code changes, update this master table of contents and the cited line ranges so the documentation stays accurate.*
